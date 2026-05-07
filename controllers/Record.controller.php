@@ -1,0 +1,138 @@
+<?php
+
+class RecordController {
+
+    public function addForm() {
+        require 'views/add_record.php';
+    }
+
+    public function editForm($recordId) {
+        $userId = $_SESSION['user_id'];
+
+        $model = new MedicalRecord(id: $recordId, doctorId: $userId);
+        $record = $model->getRecordById();
+
+        require 'views/edit_record.php';
+    }
+
+    // create
+    public function createRecord() {
+        $userId = $_SESSION['user_id'];
+
+        $patientId = $_POST['patientId'] ?? null;
+        $diagnosis = $_POST['diagnosis'] ?? null;
+        $notes = $_POST['notes'] ?? null;
+        $visitDate = $_POST['visitDate'] ?? null;
+
+        // Validate required fields
+        if (!$patientId || !$diagnosis || !$visitDate) {
+            echo "Missing required fields.";
+            return;
+        }
+
+        // todo: check if $patientId is back to patient
+
+        $model = new MedicalRecord(
+            patientId: $patientId,
+            doctorId: $userId,
+            diagnosis: $diagnosis,
+            notes: $notes,
+            visitDate: $visitDate
+        );
+
+        $success = $model->createRecord();
+
+        if (!$success) {
+            echo "Failed to create record for patient ID $patientId.";
+        } else {
+            echo "Record created successfully for patient ID $patientId.";
+        }
+    }
+
+    // read
+    public function getRecord($recordId) {
+        $userId = $_SESSION['user_id'];
+        $role = $_SESSION['role'];
+
+        // todo: make better logic
+        if ($role === 'patient') {
+            $recordModel = new MedicalRecord(id: $recordId, patientId: $userId);
+            $record = $recordModel->getRecordById();
+        } elseif ($role === 'doctor') {
+            $recordModel = new MedicalRecord(id: $recordId, doctorId: $userId);
+            $record = $recordModel->getRecordById();
+        } else {
+            echo "you cant access pattients records";
+            return;
+        }
+
+        if (!$record) {
+            echo "No record found with ID $recordId.";
+            return;
+        }
+
+        $prescriptionModel = new Prescription(recordId: $recordId);
+        $prescriptions = $prescriptionModel->getPrescriptionsByRecord();
+
+        require 'views/record_detail.php';
+    }
+
+    // update
+    public function updateRecord($recordId) {
+        $userId = $_SESSION['user_id'];
+        $diagnosis = $_POST['diagnosis'] ?? null;
+        $notes     = $_POST['notes'] ?? null;
+
+        $model = new MedicalRecord(
+            id: $recordId,
+            doctorId: $userId,
+            diagnosis: $diagnosis,
+            notes: $notes
+        );
+
+        $success = $model->updateRecord();
+
+        if (!$success) {
+            echo "Update failed or record not found.";
+        } else {
+            echo "Record updated successfully.";
+        }
+    }
+
+    // delete
+    public function deleteRecord($recordId) {
+        $userId = $_SESSION['user_id'];
+
+        $model   = new MedicalRecord(id: $recordId, doctorId: $userId);
+        $success = $model->deleteRecord();
+
+        if (!$success) {
+            echo "No record found with ID $recordId or insufficient permissions.";
+        } else {
+            echo "Record deleted successfully.";
+        }
+    }
+}
+
+
+
+
+
+    // todo: reuse this function in doctor's controller then remove it from here..
+    // public function records($patientId) {
+    //     $userId = $_SESSION['user_id'];
+    //     $role = $_SESSION['role'];
+
+    //     if ($role === 'patient' && $patientId == $userId) {
+    //         $model = new MedicalRecord(patientId: $patientId);
+    //     } elseif ($role === 'doctor') {
+    //         $model = new MedicalRecord(patientId: $patientId, doctorId: $userId);
+    //     } else {
+    //         echo "you can't see records here..";
+    //         return;
+    //     }
+
+    //     $records = $model->getRecordsByPatient($userId, $role);
+
+    //     require 'views/records.php';
+    // }
