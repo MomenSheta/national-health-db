@@ -36,13 +36,13 @@ class User extends DB {
         ]);
     }
     
-    public function login($email, $password){
+    public function login(){
         $pdo = $this->connect();
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
+        $stmt->execute([$this->email]);
         $userRow=$stmt->fetch();
 
-        if($userRow && password_verify($password,$userRow['password'])){
+        if($userRow && password_verify($this->password,$userRow['password'])){
             $this->id = $userRow['id'];
             $this->name = $userRow['name'];
             $this->email = $userRow['email'];
@@ -60,6 +60,12 @@ class User extends DB {
         $pdo = $this->connect();
         $stmt = $pdo->prepare("UPDATE users SET name = ?, phone = ? WHERE id = ?");
         return $stmt->execute([$this->name, $this->phone, $this->id]);
+    }
+
+    protected function getAllUsers() {
+        $pdo = $this->connect();
+        $stmt = $pdo->query("SELECT id, name, email, role, phone, created_at FROM users");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
     }
 
     public function getId() { return $this->id; }
