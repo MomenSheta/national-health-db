@@ -25,6 +25,7 @@ class User extends DB {
         $sql = "INSERT INTO users (name, email, password, role,phone) VALUES (?, ?, ?, ?,?)";
         $stmt = $pdo->prepare($sql);
 
+        // todo: hashing should done in controller not in Model...
         $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
 
         return $stmt->execute([
@@ -57,7 +58,6 @@ class User extends DB {
     }
 
     // todo: add logout() method...
-
 
     public function updateProfile() {
         $pdo = $this->connect();
