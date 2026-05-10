@@ -29,8 +29,8 @@ class RecordController {
             echo "Missing required fields.";
             return;
         }
-
-        // todo: check if $patientId is back to patient
+        // todo: add validation
+        // todo: check if $patientId is back to a patient
 
         $model = new MedicalRecord(
             patientId: $patientId,
@@ -74,7 +74,7 @@ class RecordController {
         $prescriptionModel = new Prescription(recordId: $recordId);
         $prescriptions = $prescriptionModel->getPrescriptionsByRecord();
 
-        require 'views/record_detail.php';
+        require 'views/show_record.php';
     }
 
     // update
@@ -82,7 +82,7 @@ class RecordController {
         $userId = $_SESSION['user_id'];
         $diagnosis = $_POST['diagnosis'] ?? null;
         $notes     = $_POST['notes'] ?? null;
-
+        // todo: add validation
         $model = new MedicalRecord(
             id: $recordId,
             doctorId: $userId,
@@ -113,26 +113,3 @@ class RecordController {
         }
     }
 }
-
-
-
-
-
-    // todo: reuse this function in doctor's controller then remove it from here..
-    // public function records($patientId) {
-    //     $userId = $_SESSION['user_id'];
-    //     $role = $_SESSION['role'];
-
-    //     if ($role === 'patient' && $patientId == $userId) {
-    //         $model = new MedicalRecord(patientId: $patientId);
-    //     } elseif ($role === 'doctor') {
-    //         $model = new MedicalRecord(patientId: $patientId, doctorId: $userId);
-    //     } else {
-    //         echo "you can't see records here..";
-    //         return;
-    //     }
-
-    //     $records = $model->getRecordsByPatient($userId, $role);
-
-    //     require 'views/records.php';
-    // }

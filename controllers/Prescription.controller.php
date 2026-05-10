@@ -23,7 +23,7 @@ class PrescriptionController {
             echo "Missing required fields.";
             return;
         }
-
+        // todo: add validation
         $model = new Prescription(
             recordId: $recordId,
             medicationName: $medicationName,
@@ -40,12 +40,12 @@ class PrescriptionController {
         $medicationName = $_POST['medicationName'] ?? null;
         $dosage = $_POST['dosage'] ?? null;
         $instructions = $_POST['instructions'] ?? null;
- 
+
         if (!$medicationName || !$dosage) {
             echo "Missing required fields.";
             return;
         }
-
+        // todo: add validation
         $model = new Prescription(
             id: $prescId,
             medicationName: $medicationName,
@@ -60,7 +60,6 @@ class PrescriptionController {
     public function deletePrescription($prescId) {
         $model = new Prescription(id: $prescId);
         $success = $model->deletePrescription();
-
         echo $success ? "Prescription deleted successfully." : "Failed to delete prescription.";
     }
 }
