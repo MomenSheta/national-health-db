@@ -8,6 +8,8 @@ class Admin extends User {
         parent::__construct($id, $name, $email, $password, $role, $createdAt); // todo: set the role 'admin'
     }
 
+    // todo: add getUserByID() method
+
     public function getUsers() {
         return $this->getAllUsers();
     }
