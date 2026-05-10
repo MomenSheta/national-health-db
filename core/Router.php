@@ -15,6 +15,7 @@ class Router {
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         
         // Remove base folder prefix
+        // todo: remove the prefix
         $base = '/projects/national-health-db';
         if (strpos($path, $base) === 0) {
             $path = substr($path, strlen($base));
