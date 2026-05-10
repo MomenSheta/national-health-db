@@ -9,15 +9,13 @@ class User extends DB {
     protected $phone;
     protected $createdAt;
 
-    // todo: remove createAt property from the constructor (it will be added by the DB)
-    public function __construct($id = null, $name = null, $email = null, $password = null, $role = null, $phone = null, $createdAt = null) {
+    public function __construct($id = null, $name = null, $email = null, $password = null, $role = null, $phone = null ) {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
         $this->role = $role;
         $this->phone = $phone;
-        $this->createdAt = $createdAt;
     }
 
     public function register() {
@@ -25,13 +23,11 @@ class User extends DB {
         $sql = "INSERT INTO users (name, email, password, role,phone) VALUES (?, ?, ?, ?,?)";
         $stmt = $pdo->prepare($sql);
 
-        // todo: hashing should done in controller not in Model...
-        $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
 
         return $stmt->execute([
             $this->name,
             $this->email,
-            $hashedPassword,
+            $this->password,
             $this->role,
             $this->phone
         ]);
@@ -42,22 +38,28 @@ class User extends DB {
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$this->email]);
         $userRow = $stmt->fetch();
-        // todo: just return the $userRow because it will be used in the view...
-        // todo: don't set the Model properties (security issue)
-        if ($userRow && password_verify($this->password, $userRow['password'])) {
-            $this->id = $userRow['id'];
-            $this->name = $userRow['name'];
-            $this->email = $userRow['email'];
-            $this->role = $userRow['role'];
-            $this->phone = $userRow['phone'];
-            $this->createdAt = $userRow['created_at'];
-            return $this;
-        }
+       if ($userRow && password_verify($this->password, $userRow['password'])) {
+        return $userRow;
+       }
 
         return null;
     }
 
-    // todo: add logout() method...
+public function logout() {
+    
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    
+    session_unset();
+
+    
+    session_destroy();
+
+    header("location: login.php");
+    exit();
+}
 
     public function updateProfile() {
         $pdo = $this->connect();
@@ -68,7 +70,6 @@ class User extends DB {
     protected function getAllUsers() {
         $pdo = $this->connect();
         $stmt = $pdo->query("SELECT id, name, email, role, phone, created_at FROM users");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // todo: FETCH_ASSOC is set as default fetch at @db.model.php
+        return $stmt->fetchAll();
     }
 }

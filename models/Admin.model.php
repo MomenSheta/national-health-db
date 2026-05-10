@@ -3,33 +3,50 @@
 require_once "User.model.php";
 
 class Admin extends User {
-    // todo: remove createAt property from the constructor (it will be added by the DB)
-    public function __construct($id = null, $name = null, $email = null, $password = null, $role = null, $createdAt = null) {
-        parent::__construct($id, $name, $email, $password, $role, $createdAt); // todo: set the role 'admin'
+    public function __construct($id = null, $name = null, $email = null, $password = null, $role =null) {
+        parent::__construct($id, $name, $email, $password, 'admin'); 
     }
 
-    // todo: add getUserByID() method
+public function getUserById(){
+        $pdo = $this->connect();
+        $stmt=$pdo->prepare("SELECT * FROM users WHERE id=?");
+        $stmt->execute([$this->id]);
+        return $stmt->fetch(); 
 
+
+    }
     public function getUsers() {
         return $this->getAllUsers();
     }
 
-    public function deleteUser($targetUserId) {
-        // todo: use the model properties (don't use parameters)
+    public function deleteUser() {
         $pdo = $this->connect();
         $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
-        return $stmt->execute([$targetUserId]);
+        return $stmt->execute([$this->id]);    }
+
+    public function addDoctor() {
+    $newDoctor=new User();
+    $newDoctor->id=null;
+    $newDoctor->name=$this->name;
+    $newDoctor->email=$this->email;
+    $newDoctor->password=$this->password;
+    $newDoctor->role='doctor';
+    return $newDoctor->register();
+
+
+
     }
 
-    public function addDoctor($name, $email, $password, $phone) {
-        // todo: use the model properties (don't use parameters)
-        $newDoctor = new User(null, $name, $email, $password, 'doctor', $phone);
-        return $newDoctor->register();
-    }
+    public function addPatient() {
 
-    public function addPatient($name, $email, $password, $phone) {
-        // todo: use the model properties (don't use parameters)
-        $newPatient = new User(null, $name, $email, $password, 'patient', $phone);
-        return $newPatient->register();
+   $newPatien=new User();
+   $newPatien->id=null;
+   $newPatien->name=$this->name;
+   $newPatien->email=$this->email;
+   $newPatien->password=$this->password;
+   $newPatien->role='patient';
+   return $newPatien->register();
+
     }
+    
 }
