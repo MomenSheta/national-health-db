@@ -9,7 +9,7 @@ class User extends DB {
     protected $phone;
     protected $createdAt;
 
-    public function __construct($id = null, $name = null, $email = null, $password = null, $role = null, $phone = null ) {
+    public function __construct($id = null, $name = null, $email = null, $password = null, $role = null, $phone = null) {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
@@ -38,28 +38,25 @@ class User extends DB {
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$this->email]);
         $userRow = $stmt->fetch();
-       if ($userRow && password_verify($this->password, $userRow['password'])) {
-        return $userRow;
-       }
+        if ($userRow && password_verify($this->password, $userRow['password'])) {
+            return $userRow;
+        }
 
         return null;
     }
 
-public function logout() {
-    
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
+    public function logout() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        session_unset();
+        session_destroy();
+
+        // todo: user Redirect utility
+        header("location: login.php");
+        exit();
     }
-
-    
-    session_unset();
-
-    
-    session_destroy();
-
-    header("location: login.php");
-    exit();
-}
 
     public function updateProfile() {
         $pdo = $this->connect();
