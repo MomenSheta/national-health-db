@@ -1,12 +1,11 @@
 <?php
 
 class DoctorController {
-
     public function getPatients() {
         $userId = $_SESSION['user_id'];
-        $doctor = new Dcotor($userId);
+        $doctor = new Doctor($userId);
         $patients = $doctor->getMyPatients();
-        require 'views/show_patients.php';
+        require 'views/show_all_patients.php';
     }
 
     public function getPatientRecords($patientId) {

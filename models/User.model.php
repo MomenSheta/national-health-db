@@ -33,6 +33,7 @@ class User extends DB {
         ]);
     }
 
+    // todo: add this to the controller
     public function login() {
         $pdo = $this->connect();
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
@@ -45,6 +46,7 @@ class User extends DB {
         return null;
     }
 
+    // todo: add this to the controller
     public function logout() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -53,7 +55,7 @@ class User extends DB {
         session_unset();
         session_destroy();
 
-        // todo: user Redirect utility
+        // todo: use Redirect utility
         header("location: login.php");
         exit();
     }
@@ -69,4 +71,6 @@ class User extends DB {
         $stmt = $pdo->query("SELECT id, name, email, role, phone, created_at FROM users");
         return $stmt->fetchAll();
     }
+
+    // todo: add getuserMethod() here...
 }
