@@ -1,11 +1,10 @@
 <?php
-function checkRoleMiddleware($allowedRoles = []) {
+function checkRoleMiddleware(array $allowedRoles) {
     $currentRole = $_SESSION['role'] ?? null;
 
     if (!in_array($currentRole, $allowedRoles)) {
         http_response_code(403);
         echo "Forbidden: role not allowed";
-        return false;
+        exit;
     }
-    return true;
 }

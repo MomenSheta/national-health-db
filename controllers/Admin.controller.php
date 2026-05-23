@@ -1,8 +1,6 @@
 <?php
 
-
 class AdminController {
-
     // get methods 
     public function addForm() {
         require "views/add_user.php";
@@ -16,8 +14,10 @@ class AdminController {
     }
 
     public function allUsers() {
-        $user = new Admin($_SESSION["user_id"]);
-        $usersList = $user->getUsers();
+        $user = new User();
+        $usersList = $user->getAllUsers();
+
+        // todo: make getAllUsers function public
 
         require "views/dashboard_admin.php";
     }
@@ -58,5 +58,11 @@ class AdminController {
 
         $user = new User($userID, $userName, $userEmail, phone: $userPhone);
         $user->updateProfile();
+    }
+
+
+    public function deleteUser($userID) {
+        $user = new User($userID);
+        // $user->delete();
     }
 }

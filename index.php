@@ -4,7 +4,6 @@ session_start();
 $_SESSION["user_id"] = "4";
 $_SESSION["role"] = "doctor";
 
-
 // todo: add auto_loader
 require "core/Router.php";
 require "util/Redirect.php";
@@ -22,14 +21,21 @@ require "controllers/Prescription.controller.php";
 require "controllers/User.controller.php";
 require "controllers/Admin.controller.php";
 require "controllers/Doctor.controller.php";
+require "controllers/Patient.controller.php";
 
 $router = new Router();
 $router->get('/', [UserController::class, 'home'], []); // check auth
 
-// $router->get('/login', [AuthController::class, 'loginForm'],[]);
-// $router->post('/login', [AuthController::class, 'login'],[]);
 // $router->get('/register', [AuthController::class, 'registerForm'],[]);
 // $router->post('/register', [AuthController::class, 'register'],[]);
+// $router->get('/login', [AuthController::class, 'loginForm'],[]);
+// $router->post('/login', [AuthController::class, 'login'],[]);
+// $router->post('/logout', [AuthController::class, 'logout'],[]);
+
+// $router->post('/profile', [User::class, 'profile'],[]);
+
+$router->get('/myrecords', [PatientController::class, 'getMyRecords'],[]); // [patient] 
+$router->get('/myprescreptions', [PatientController::class, 'getMyPrescription'],[]); // [patient] 
 
 $router->get('/record/add', [RecordController::class, 'addForm'], []); // [doctor]
 $router->post('/record/add', [RecordController::class, 'createRecord'], []); // [doctor]
@@ -47,14 +53,11 @@ $router->post('/presc/{id}/delete', [PrescriptionController::class, 'deletePresc
 $router->get('/patients', [DoctorController::class, 'getPatients'], []); // [doctor]
 $router->get('/patients/{id}', [DoctorController::class, 'getPatientRecords'], []); // [doctor]
 
-// $router->get('/myrecords', [PatientController::class, 'getMyRecords'],[]); [patient] 
-// $router->get('/myprescreptions', [PatientController::class, 'getMyPrescription'],[]); [patient] 
-
 $router->get('/admin/users', [AdminController::class, 'allUsers'], []); // [admin]
 $router->get('/admin/users/add', [AdminController::class, 'addForm'], []); // [admin]
 $router->post('/admin/users/add', [AdminController::class, 'createUser'], []); // [admin]
 $router->get('/admin/users/{id}/edit', [AdminController::class, 'editForm'], []); // [admin]
 $router->post('/admin/users/{id}/edit', [AdminController::class, 'updateUser'], []); // [admin]
-
+$router->post('/admin/users/{id}/delete', [AdminController::class, 'deleteUser'], []); // [admin]
 
 $router->dispatch();
