@@ -2,7 +2,7 @@
 session_start();
 
 $_SESSION["user_id"] = "4";
-$_SESSION["role"] = "doctor";
+$_SESSION["user_role"] = "doctor";
 
 // todo: add auto_loader
 require "core/Router.php";
@@ -15,7 +15,9 @@ require "models/Prescription.model.php";
 require "models/User.model.php";
 require "models/Admin.model.php";
 require "models/Doctor.model.php";
+require "models/Patient.model.php"; 
 
+require "controllers/Authentication.controller.php"; 
 require "controllers/Record.controller.php";
 require "controllers/Prescription.controller.php";
 require "controllers/User.controller.php";
@@ -26,16 +28,16 @@ require "controllers/Patient.controller.php";
 $router = new Router();
 $router->get('/', [UserController::class, 'home'], []); // check auth
 
-// $router->get('/register', [AuthController::class, 'registerForm'],[]);
-// $router->post('/register', [AuthController::class, 'register'],[]);
-// $router->get('/login', [AuthController::class, 'loginForm'],[]);
-// $router->post('/login', [AuthController::class, 'login'],[]);
-// $router->post('/logout', [AuthController::class, 'logout'],[]);
+// $router->get('/register', [AuthenticationController::class, 'registerForm'],[]);
+// $router->post('/register', [AuthenticationController::class, 'register'],[]);
+// $router->get('/login', [AuthenticationController::class, 'loginForm'],[]);
+// $router->post('/login', [AuthenticationController::class, 'login'],[]);
+// $router->post('/logout', [AuthenticationController::class, 'logout'],[]);
 
 // $router->post('/profile', [User::class, 'profile'],[]);
 
 $router->get('/myrecords', [PatientController::class, 'getMyRecords'],[]); // [patient] 
-$router->get('/myprescreptions', [PatientController::class, 'getMyPrescription'],[]); // [patient] 
+$router->get('/myprescreptions', [PatientController::class, 'getMyPrescriptions'],[]); // [patient] 
 
 $router->get('/record/add', [RecordController::class, 'addForm'], []); // [doctor]
 $router->post('/record/add', [RecordController::class, 'createRecord'], []); // [doctor]

@@ -20,7 +20,7 @@ class User extends DB
         $this->phone = $phone;
     }
 
-    public function register()
+    public function createUser()
     {
         $pdo = $this->connect();
         $sql = "INSERT INTO users (name, email, password, role, phone) VALUES (?, ?, ?, ?, ?)";
@@ -46,19 +46,6 @@ class User extends DB
         }
 
         return null;
-    }
-
-    public function logout()
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        session_unset();
-        session_destroy();
-
-        header("Location: ../views/home.php");
-        exit();
     }
 
     public function updateProfile()

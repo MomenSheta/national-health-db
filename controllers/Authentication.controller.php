@@ -4,12 +4,16 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once "Validation.controller.php";
-require_once "../models/User.model.php";
+require_once "models/User.model.php";
+
 class AuthenticationController {
+
+    public function loginForm() {
+        include "views/login.php"; 
+    }
 
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
 
@@ -18,7 +22,7 @@ class AuthenticationController {
 
             if (!empty($validationErrors)) {
                 $_SESSION['error'] = $validationErrors[0]; 
-                header("Location: ../views/home.php");
+                redirect("/views/home.php");         
                 exit();
             }
 
@@ -33,25 +37,64 @@ class AuthenticationController {
                 $_SESSION['is_logged_in'] = true;
 
                 if ($userData['role'] === 'admin') {
-                    header("Location: ../views/dashboard_admin.php");
+                    redirect("/views/dashboard_admin.php");
                 } elseif ($userData['role'] === 'doctor') {
-                    header("Location: ../views/dashboard_doctor.php");
+                    redirect("/views/dashboard_doctor.php");
                 } elseif ($userData['role'] === 'patient') {
-                    header("Location: ../views/dashboard_patient.php");
+                    redirect("/views/dashboard_patient.php");
                 }
                 exit();
             } else {
                 $_SESSION['error'] = "Email or password is incorrect";
-                header("Location: ../views/home.php");
+                redirect("/views/login.php");
                 exit();
             }
         }
     }
 
+    public function registerForm() {
+        include "views/register.php"; 
+    }
+public function register() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = trim($_POST['name']);
+            $email = trim($_POST['email']);
+            $password = trim($_POST['password']);
+            $phone = trim($_POST['phone']);
+            $role = trim($_POST['role']); 
+
+            $validator = new ValidationController();
+            $validationErrors = $validator->validateRegistration($name, $email, $password, $phone, $role);
+
+            if (!empty($validationErrors)) {
+                $_SESSION['error'] = $validationErrors[0]; 
+                redirect("/views/register.php");
+                exit();
+            }
+
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+            $userModel = new User(null, $name, $email, $hashedPassword, $role, $phone);
+
+            if ($userModel->createUser()) {
+                $_SESSION['success'] = "Account created successfully! Please login.";
+                redirect("/views/home.php");
+            } else {
+                $_SESSION['error'] = "Something went wrong, please try again.";
+                redirect("/views/register.php");
+            }
+            exit();
+        }
+    }
     public function logout() {
-        $userModel = new User();
-        $userModel->logout();
-        header("Location: ../views/home.php");
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        session_unset();
+        session_destroy();
+        
+        redirect("/views/logout.php");
         exit();
     }
 }

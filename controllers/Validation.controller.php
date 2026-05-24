@@ -3,9 +3,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-class ValidationController {
-
-    public function validateLogin($email, $password) {
+class ValidationController
+{
+    public function validateLogin($email, $password)
+    {
         $errors = [];
 
         if (empty($email)) {
@@ -21,7 +22,8 @@ class ValidationController {
         return $errors;
     }
 
-    public function validateRegistration($name, $email, $password, $phone) {
+    public function validateRegistration($name, $email, $password, $phone, $role)
+    {
         $errors = [];
 
         if (empty($name) || strlen($name) < 3) {
@@ -40,24 +42,11 @@ class ValidationController {
             $errors[] = "Phone number must be digits only (10-14 digits).";
         }
 
+        $allowedRoles = ['admin', 'doctor', 'patient'];
+        if (empty($role) || !in_array($role, $allowedRoles)) {
+            $errors[] = "Invalid user role selection.";
+        }
+
         return $errors;
-    }
-
-    public static function checkAccess($allowedRole) {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
-            $_SESSION['error'] = "Please login first.";
-            header("Location: ../views/home.php");
-            exit();
-        }
-
-        if ($_SESSION['user_role'] !== $allowedRole) {
-            $_SESSION['error'] = "Unauthorized access!";
-            header("Location: ../views/home.php");
-            exit();
-        }
     }
 }
