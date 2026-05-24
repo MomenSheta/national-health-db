@@ -66,4 +66,11 @@ class User extends DB
         $stmt = $pdo->query("SELECT id, name, email, role, phone, created_at FROM users");
         return $stmt->fetchAll();
     }
+
+ public function getUserById($userId) {
+        $pdo = $this->connect();
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$userId]);
+        return $stmt->fetch();
+    }
 }
