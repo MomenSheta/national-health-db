@@ -34,6 +34,11 @@ class User extends DB
             $this->phone
         ]);
     }
+ public function deleteUser($userId) {
+        $pdo = $this->connect();
+        $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+        return $stmt->execute([$userId]);
+    }
 
     public function login()
     {
@@ -55,7 +60,7 @@ class User extends DB
         return $stmt->execute([$this->name, $this->phone, $this->id]);
     }
 
-    protected function getAllUsers()
+    public function getAllUsers()
     {
         $pdo = $this->connect();
         $stmt = $pdo->query("SELECT id, name, email, role, phone, created_at FROM users");

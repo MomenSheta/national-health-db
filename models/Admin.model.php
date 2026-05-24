@@ -19,12 +19,7 @@ class Admin extends User {
         return $this->getAllUsers();
     }
 
-    public function deleteUser($userId) {
-        $pdo = $this->connect();
-        $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
-        return $stmt->execute([$userId]);
-    }
-
+   
     public function addDoctor($name, $email, $password, $phone = null) {
         $newDoctor = new User(null, $name, $email, $password, 'doctor', $phone);
         return $newDoctor->createUser();

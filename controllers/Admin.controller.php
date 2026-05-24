@@ -40,7 +40,7 @@ class AdminController {
             role: $userRole,
             phone: $userPhone
         );
-        $user->register();
+        $user->createUser();
         redirect("/");
         exit;
     }
