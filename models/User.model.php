@@ -37,7 +37,7 @@ class User extends DB
  public function deleteUser($userId) {
         $pdo = $this->connect();
         $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
-        return $stmt->execute([$userId]);
+        return $stmt->execute([$this->id]);
     }
 
     public function login()
@@ -70,7 +70,7 @@ class User extends DB
  public function getUserById($userId) {
         $pdo = $this->connect();
         $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-        $stmt->execute([$userId]);
+        $stmt->execute([$this->id]);
         return $stmt->fetch();
     }
 }
