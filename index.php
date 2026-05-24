@@ -13,7 +13,6 @@ require "middlewares/RoleMiddleware.php";
 require "models/MedicalRecord.model.php";
 require "models/Prescription.model.php";
 require "models/User.model.php";
-require "models/Admin.model.php";
 require "models/Doctor.model.php";
 require "models/Patient.model.php"; 
 
@@ -39,6 +38,9 @@ $router->get('/', [UserController::class, 'home'], []); // check auth
 $router->get('/myrecords', [PatientController::class, 'getMyRecords'],[]); // [patient] 
 $router->get('/myprescreptions', [PatientController::class, 'getMyPrescriptions'],[]); // [patient] 
 
+$router->get('/patients', [DoctorController::class, 'getPatients'], []); // [doctor]
+$router->get('/patients/{id}', [DoctorController::class, 'getPatientRecords'], []); // [doctor]
+
 $router->get('/record/add', [RecordController::class, 'addForm'], []); // [doctor]
 $router->post('/record/add', [RecordController::class, 'createRecord'], []); // [doctor]
 $router->get('/record/{id}/details', [RecordController::class, 'getRecord'], []); // [doctor, patient]
@@ -51,9 +53,6 @@ $router->post('/presc/add/{recordId}', [PrescriptionController::class, 'createPr
 $router->get('/presc/{id}/edit', [PrescriptionController::class, 'editForm'], []); // [doctor]
 $router->post('/presc/{id}/edit', [PrescriptionController::class, 'updatePrescription'], []); // [doctor]
 $router->post('/presc/{id}/delete', [PrescriptionController::class, 'deletePrescription'], []); // [doctor]
-
-$router->get('/patients', [DoctorController::class, 'getPatients'], []); // [doctor]
-$router->get('/patients/{id}', [DoctorController::class, 'getPatientRecords'], []); // [doctor]
 
 $router->get('/admin/users', [AdminController::class, 'allUsers'], []); // [admin]
 $router->get('/admin/users/add', [AdminController::class, 'addForm'], []); // [admin]

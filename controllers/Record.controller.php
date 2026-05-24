@@ -52,7 +52,7 @@ class RecordController {
     // read
     public function getRecord($recordId) {
         $userId = $_SESSION['user_id'];
-        $role = $_SESSION['role'];
+        $role = $_SESSION['user_role'];
 
         // todo: make better logic
         if ($role === 'patient') {

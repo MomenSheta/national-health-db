@@ -1,8 +1,17 @@
 <?php
 
 class PatientController {
-    private function getMyRecords() {
+    public function getMyRecords() {
+        $userId = $_SESSION['user_id'];
+        $model = new MedicalRecord(patientId: $userId);
+        $records = $model->getRecordsByPatient();
+        // require 'views/page.php';
     }
-    private function getMyPrescription() {
+
+    public function getMyPrescription() {
+        $userId = $_SESSION['user_id'];
+        $model = new Prescription(patientId: $userId);
+        $records = $model->getPrescriptionsByPatient();
+        // require 'views/page.php';
     }
 }

@@ -28,12 +28,13 @@ class Router {
 
                 // Run middlewares
                 foreach ($data['middlewares'] as $mw) {
-                    $result = call_user_func($mw);
-                    if ($result === false) {
-                        http_response_code(403);
-                        echo "Forbidden";
-                        return;
-                    }
+                    call_user_func($mw);
+                    // $result = call_user_func($mw);
+                    // if ($result === false) {
+                    //     http_response_code(403);
+                    //     echo "Forbidden";
+                    //     return;
+                    // }
                 }
 
                 // Run controller

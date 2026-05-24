@@ -3,16 +3,18 @@
 class Prescription extends DB {
     private $id;
     private $recordId;
+    private $patientId;
     private $medicationName;
     private $dosage;
     private $instructions;
 
-    public function __construct($id = null, $recordId = null, $medicationName = null, $dosage = null, $instructions = null) {
+    public function __construct($id = null, $recordId = null, $patientId = null, $medicationName = null, $dosage = null, $instructions = null) {
         $this->id = $id;
         $this->recordId = $recordId;
         $this->medicationName = $medicationName;
         $this->dosage = $dosage;
         $this->instructions = $instructions;
+        $this->patientId = $patientId;
     }
 
     public function addPrescription() {
@@ -45,6 +47,17 @@ class Prescription extends DB {
         $pdo = $this->connect();
         $stmt = $pdo->prepare("SELECT * FROM prescriptions WHERE record_id = ?");
         $stmt->execute([$this->recordId]);
+        return $stmt->fetchAll();
+    }
+
+    public function getPrescriptionsByPatient() {
+        $pdo = $this->connect();
+        $stmt = $pdo->prepare("SELECT p.*, r.patient_id
+                                FROM prescriptions AS p
+                                JOIN medical_records AS r
+                                ON r.id = p.record_id
+                                WHERE r.patient_id = ?;");
+        $stmt->execute([$this->patientId]);
         return $stmt->fetchAll();
     }
 

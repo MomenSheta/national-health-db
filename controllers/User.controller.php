@@ -1,11 +1,11 @@
 <?php
 
 class UserController {
-    public function Home() {
+    public function home() {
         require 'views/home.php';
     }
 
-    public function Profile() {
+    public function profile() {
         require 'views/profile.php';
     }
 }

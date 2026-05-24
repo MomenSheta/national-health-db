@@ -9,7 +9,7 @@ require_once "models/User.model.php";
 class AuthenticationController {
 
     public function loginForm() {
-        include "views/login.php"; 
+        include "views/login.php";
     }
 
     public function login() {
@@ -21,13 +21,13 @@ class AuthenticationController {
             $validationErrors = $validator->validateLogin($email, $password);
 
             if (!empty($validationErrors)) {
-                $_SESSION['error'] = $validationErrors[0]; 
-                redirect("/views/home.php");         
+                $_SESSION['error'] = $validationErrors[0];
+                redirect("/views/home.php");
                 exit();
             }
 
             $userModel = new User(null, null, $email, $password);
-            $userData = $userModel->login(); 
+            $userData = $userModel->login();
 
             if ($userData) {
                 session_regenerate_id(true);
@@ -53,21 +53,21 @@ class AuthenticationController {
     }
 
     public function registerForm() {
-        include "views/register.php"; 
+        include "views/register.php";
     }
-public function register() {
+    public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = trim($_POST['name']);
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
             $phone = trim($_POST['phone']);
-            $role = trim($_POST['role']); 
+            $role = trim($_POST['role']);
 
             $validator = new ValidationController();
             $validationErrors = $validator->validateRegistration($name, $email, $password, $phone, $role);
 
             if (!empty($validationErrors)) {
-                $_SESSION['error'] = $validationErrors[0]; 
+                $_SESSION['error'] = $validationErrors[0];
                 redirect("/views/register.php");
                 exit();
             }
@@ -81,19 +81,20 @@ public function register() {
                 redirect("/views/home.php");
             } else {
                 $_SESSION['error'] = "Something went wrong, please try again.";
-                redirect("/views/register.php");
+                redirect("/register");
             }
             exit();
         }
     }
+
     public function logout() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        
+
         session_unset();
         session_destroy();
-        
+
         redirect("/views/logout.php");
         exit();
     }
