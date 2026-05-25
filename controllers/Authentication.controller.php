@@ -22,7 +22,7 @@ class AuthenticationController {
 
             if (!empty($validationErrors)) {
                 $_SESSION['error'] = $validationErrors[0];
-                redirect("/views/home.php");
+                redirect("/");
                 exit();
             }
 
@@ -46,7 +46,7 @@ class AuthenticationController {
                 exit();
             } else {
                 $_SESSION['error'] = "Email or password is incorrect";
-                redirect("/views/login.php");
+                redirect("/login");
                 exit();
             }
         }
@@ -78,7 +78,7 @@ class AuthenticationController {
 
             if ($userModel->createUser()) {
                 $_SESSION['success'] = "Account created successfully! Please login.";
-                redirect("/views/home.php");
+                redirect("/");
             } else {
                 $_SESSION['error'] = "Something went wrong, please try again.";
                 redirect("/register");
@@ -95,7 +95,7 @@ class AuthenticationController {
         session_unset();
         session_destroy();
 
-        redirect("/views/logout.php");
+        redirect("/logout");
         exit();
     }
 }
