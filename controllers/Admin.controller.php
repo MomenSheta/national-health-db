@@ -8,16 +8,13 @@ class AdminController {
 
     public function editForm($userID) {
         $model = new User($userID);
-        // $user = $model->getUser();
-        // todo: to be continued...
+        $user = $model->getUserById();
         require "views/edit_user.php";
     }
 
     public function allUsers() {
         $user = new User();
         $usersList = $user->getAllUsers();
-
-        // todo: make getAllUsers function public
 
         require "views/dashboard_admin.php";
     }
@@ -31,18 +28,18 @@ class AdminController {
         $userPhone = $_POST['phone'] ?? null;
 
         // todo: add validation
-        // todo: add hashing layer
-
+        
+        $hashedPassword = password_hash($userPassword, PASSWORD_BCRYPT);
         $user = new User(
             name: $userName,
             email: $userEmail,
-            password: $userPassword,
+            password: $hashedPassword,
             role: $userRole,
             phone: $userPhone
         );
         $user->createUser();
         redirect("/");
-        exit;
+        exit();
     }
 
     public function updateUser($userID) {
@@ -58,11 +55,15 @@ class AdminController {
 
         $user = new User($userID, $userName, $userEmail, phone: $userPhone);
         $user->updateProfile();
-    }
 
+        redirect("/");
+        exit();
+    }
 
     public function deleteUser($userID) {
         $user = new User($userID);
-        // $user->delete();
+        $user->deleteUser();
+        redirect("/");
+        exit();
     }
 }

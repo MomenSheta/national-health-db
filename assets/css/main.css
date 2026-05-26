@@ -1,13 +1,105 @@
 @import "tailwindcss";
 
 * {
-    margin: 0;
-    padding: 0;
+    /* margin: 0; */
+    /* padding: 0; */
+    /* border: none; */
     outline: 0;
-    border: none;
     list-style: none;
     text-decoration: none;
     box-sizing: border-box;
     font-family: "Poppins";
 }
 
+:root {
+    --mint-green: #B8F7D4;
+    --soft-seafoam: #A0EAC5;
+    --aqua-teal: #6FE7DB;
+    --deep-teal: #4DC9C0;
+    --clinical-teal: #2CAAA6;
+
+    --soft-blue: #7FA6EE;
+    --medium-blue: #5F8DDC;
+    --deep-blue: #3F6CCB;
+    --lavender-purple: #835AF1;
+    --royal-purple: #6A45D6;
+    --deep-indigo: #4E2FB8;
+
+    --color-white: #F4F6F7;
+    --color-gray-light: #E0E4E7;
+    --color-gray-mid: #C5CBD0;
+    --color-gray-dark: #2C3E50;
+    --color-black: #111111;
+
+    --color-danger: #E74C3C;
+    --color-warning: #F39C12;
+    --color-success: #2ECC71;
+    --color-info: #3498DB;
+
+    --padding-main: 16rem;
+}
+
+html,
+body {
+    background: var(--color-white);
+    color: var(--color-gray-dark);
+    width: 100%;
+}
+
+body main {
+    padding: 2rem 1rem;
+    margin: auto;
+    max-width: 80rem;
+}
+
+hr {
+    border-color: var(--color-gray-mid);
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.btn {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.5rem;
+    border-width: 1px;
+    padding: 0.5rem;
+    transition: all 0.15s ease;
+    font-size: small;
+    white-space: nowrap;
+
+    &.success {
+        border-color: var( --deep-teal);
+        color: var( --deep-teal);
+
+        &:hover {
+            color: var(--color-white);
+            background: var( --deep-teal);
+        }
+    }
+
+    &.info {
+        border-color: var(--deep-blue);
+        color: var(--deep-blue);
+
+        &:hover {
+            color: var(--color-white);
+            background: var(--deep-blue);
+        }
+    }
+}
+
+@media (min-width: 640px) {
+    main {
+        padding-inline: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    main {
+        padding-inline: 2rem;
+    }
+}

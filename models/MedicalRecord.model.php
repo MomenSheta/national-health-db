@@ -37,14 +37,22 @@ class MedicalRecord extends DB {
 
     public function getRecordById() {
         $pdo = $this->connect();
-        // todo: make better logic
-
         if ($this->doctorId) {
-            $stmt = $pdo->prepare("SELECT * FROM medical_records WHERE id = ? AND doctor_id = ?");
+            $stmt = $pdo->prepare("SELECT r.*, pu.name AS patient_name, du.name AS doctor_name
+                                    FROM medical_records AS r
+                                    JOIN users AS pu ON r.patient_id = pu.id
+                                    JOIN users AS du ON r.doctor_id = du.id
+                                    WHERE r.id = ? AND r.doctor_id = ?");
             $stmt->execute([$this->id, $this->doctorId]);
-        } else {
-            $stmt = $pdo->prepare("SELECT * FROM medical_records WHERE id = ? AND patient_id = ?");
+        } else if ($this->patientId) {
+            $stmt = $pdo->prepare("SELECT r.*, pu.name AS patient_name, du.name AS doctor_name
+                                    FROM medical_records AS r
+                                    JOIN users AS pu ON r.patient_id = pu.id
+                                    JOIN users AS du ON r.doctor_id = du.id
+                                    WHERE r.id = ? AND r.patient_id = ?");
             $stmt->execute([$this->id, $this->patientId]);
+        } else {
+            return null;
         }
         return $stmt->fetch();
     }
@@ -52,13 +60,22 @@ class MedicalRecord extends DB {
     public function getRecordsByPatient() {
         $pdo = $this->connect();
 
-        // todo: make better logic
-        if ($this->doctorId) {
-            $stmt = $pdo->prepare("SELECT * FROM medical_records WHERE patient_id = ? AND doctor_id = ?");
+        if ($this->doctorId && $this->patientId) {
+            $stmt = $pdo->prepare("SELECT r.*, u.name AS patient_name
+                                 FROM medical_records AS r
+                                 JOIN users AS u
+                                 ON r.patient_id = u.id
+                                 WHERE r.patient_id = ? AND r.doctor_id = ?");
             $stmt->execute([$this->patientId, $this->doctorId]);
-        } else {
-            $stmt = $pdo->prepare("SELECT * FROM medical_records WHERE patient_id = ?");
+        } else if ($this->patientId) {
+            $stmt = $pdo->prepare("SELECT r.*, u.name AS doctor_name
+                                    FROM medical_records AS r
+                                    JOIN users AS u
+                                    ON r.doctor_id = u.id
+                                    WHERE r.patient_id = ?");
             $stmt->execute([$this->patientId]);
+        } else {
+            return null;
         }
         return $stmt->fetchAll();
     }

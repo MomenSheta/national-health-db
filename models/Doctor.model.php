@@ -10,7 +10,7 @@ class Doctor extends User {
 
     public function getMyPatients() {
         $pdo = $this->connect();
-        $sql = "SELECT DISTINCT u.id, u.name, u.email, u.phone 
+        $sql = "SELECT DISTINCT u.id, u.name, u.email, u.phone, u.created_at
                 FROM users u 
                 JOIN medical_records m ON u.id = m.patient_id 
                 WHERE m.doctor_id = ?";

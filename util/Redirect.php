@@ -1,6 +1,11 @@
 <?php
 
-function redirect($path) {
+function fixed_path($path) {
     $base = '/projects/national-health-db';
-    header("Location: $base" . $path);
+    return "$base" . "$path";
+}
+
+function redirect($path) {
+    $fixed_path = fixed_path($path);
+    header("Location: " . $fixed_path);
 }

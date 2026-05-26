@@ -4,17 +4,17 @@
 
 <form action="#" method="POST">
     <label for="name">User Name:</label>
-    <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
+    <input type="text" name="name" id="name" required value="<?php echo htmlspecialchars($user['name']); ?>">
 
     <br />
 
     <label for="email">User Email:</label>
-    <input type="email" name="email" id="email" required><?php echo htmlspecialchars($user['email']); ?></input>
+    <input type="email" name="email" id="email" required value="<?php echo htmlspecialchars($user['email']); ?>">
 
     <br />
 
     <label for="phone">Phone:</label>
-    <input type="text" name="phone" id="phone"><?php echo htmlspecialchars($user['role']); ?></input>
+    <input type="text" name="phone" id="phone" value="<?php echo htmlspecialchars($user['phone']);?>">
 
     <br />
 

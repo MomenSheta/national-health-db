@@ -5,13 +5,13 @@ class PatientController {
         $userId = $_SESSION['user_id'];
         $model = new MedicalRecord(patientId: $userId);
         $records = $model->getRecordsByPatient();
-        // require 'views/page.php';
+        require 'views/patient/records.php';
     }
 
-    public function getMyPrescription() {
+    public function getMyPrescriptions() {
         $userId = $_SESSION['user_id'];
         $model = new Prescription(patientId: $userId);
-        $records = $model->getPrescriptionsByPatient();
-        // require 'views/page.php';
+        $prescriptions = $model->getPrescriptionsByPatient();
+        require 'views/patient/prescriptions.php';
     }
 }

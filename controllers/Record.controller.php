@@ -3,7 +3,16 @@
 class RecordController {
 
     public function addForm() {
-        require 'views/add_record.php';
+        $userId = $_SESSION['user_id'];
+
+        if (isset($_GET["patient"])) {
+            $selected = $_GET["patient"];
+        }
+
+        $model = new Doctor($userId);
+        $my_patients = $model->getMyPatients();
+
+        require 'views/doctor/add_record.php';
     }
 
     public function editForm($recordId) {
@@ -54,7 +63,6 @@ class RecordController {
         $userId = $_SESSION['user_id'];
         $role = $_SESSION['user_role'];
 
-        // todo: make better logic
         if ($role === 'patient') {
             $recordModel = new MedicalRecord(id: $recordId, patientId: $userId);
             $record = $recordModel->getRecordById();

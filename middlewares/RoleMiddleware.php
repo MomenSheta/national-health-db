@@ -5,6 +5,6 @@ function checkRoleMiddleware(array $allowedRoles) {
     if (!in_array($currentRole, $allowedRoles)) {
         http_response_code(403);
         echo "Forbidden: role not allowed";
-        exit;
+        exit();
     }
 }
