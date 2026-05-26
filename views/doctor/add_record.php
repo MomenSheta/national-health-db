@@ -2,10 +2,11 @@
 
 <form action="#" method="POST">
     <label for="patientId">Patient ID:</label>
-    <Select>
+    <Select name="patientId" id="patientId">
+        <option disabled selected>choose patient</option>
         <?php
-        if (isset($my_patients)) {
-            foreach ($my_patients as $patient) {
+        if (isset($patients)) {
+            foreach ($patients as $patient) {
         ?>
                 <option value="<?= $patient["id"] ?>" <?= isset($selected) && $patient["id"] == $selected ? "selected" : "" ?>>
                     <?= $patient["name"] ?>

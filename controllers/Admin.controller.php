@@ -1,25 +1,25 @@
 <?php
 
 class AdminController {
-    // get methods 
+    // GET methods 
     public function addForm() {
-        require "views/add_user.php";
+        require "views/admin/add_user.php";
     }
 
     public function editForm($userID) {
         $model = new User($userID);
         $user = $model->getUserById();
-        require "views/edit_user.php";
+        require "views/admin/edit_user.php";
     }
 
     public function allUsers() {
         $user = new User();
         $usersList = $user->getAllUsers();
 
-        require "views/dashboard_admin.php";
+        require "views/admin/dashboard.php";
     }
 
-    // post methods
+    // POST methods
     public function createUser() {
         $userName = $_POST['name'] ?? null;
         $userEmail = $_POST['email'] ?? null;

@@ -71,16 +71,6 @@ hr {
     font-size: small;
     white-space: nowrap;
 
-    &.success {
-        border-color: var( --deep-teal);
-        color: var( --deep-teal);
-
-        &:hover {
-            color: var(--color-white);
-            background: var( --deep-teal);
-        }
-    }
-
     &.info {
         border-color: var(--deep-blue);
         color: var(--deep-blue);
@@ -90,6 +80,27 @@ hr {
             background: var(--deep-blue);
         }
     }
+
+    &.success {
+        border-color: var(--deep-teal);
+        color: var(--deep-teal);
+
+        &:hover {
+            color: var(--color-white);
+            background: var(--deep-teal);
+        }
+    }
+
+    &.danger {
+        border-color: var(--color-danger);
+        color: var(--color-danger);
+
+        &:hover {
+            color: var(--color-white);
+            background: var(--color-danger);
+        }
+    }
+
 }
 
 @media (min-width: 640px) {

@@ -1,6 +1,13 @@
 <?php
 
 class DoctorController {
+    public function getRecords() {
+        $userId = $_SESSION['user_id'];
+        $model= new MedicalRecord(doctorId:$userId);
+        $records = $model->getRecordsByDoctor();
+        require 'views/doctor/records.php';
+    }
+
     public function getPatients() {
         $userId = $_SESSION['user_id'];
         $doctor = new Doctor($userId);
@@ -16,6 +23,6 @@ class DoctorController {
 
         $record_model = new MedicalRecord(patientId: $patientId, doctorId: $userId);
         $records = $record_model->getRecordsByPatient();
-        require 'views/show_patient.php';
+        require 'views/doctor/show_patient.php';
     }
 }

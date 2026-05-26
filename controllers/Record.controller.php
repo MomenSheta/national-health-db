@@ -10,7 +10,7 @@ class RecordController {
         }
 
         $model = new Doctor($userId);
-        $my_patients = $model->getMyPatients();
+        $patients = $model->getPatients();
 
         require 'views/doctor/add_record.php';
     }
@@ -21,7 +21,7 @@ class RecordController {
         $model = new MedicalRecord(id: $recordId, doctorId: $userId);
         $record = $model->getRecordById();
 
-        require 'views/edit_record.php';
+        require 'views/doctor/edit_record.php';
     }
 
     // create
@@ -54,7 +54,8 @@ class RecordController {
         if (!$success) {
             echo "Failed to create record for patient ID $patientId.";
         } else {
-            echo "Record created successfully for patient ID $patientId.";
+            // echo "Record created successfully for patient ID $patientId.";
+            redirect("/");
         }
     }
 
@@ -103,7 +104,9 @@ class RecordController {
         if (!$success) {
             echo "Update failed or record not found.";
         } else {
-            echo "Record updated successfully.";
+            // echo "Record updated successfully.";
+            // redirect("/record/$recordId/details");
+            redirect("/");
         }
     }
 
@@ -117,7 +120,8 @@ class RecordController {
         if (!$success) {
             echo "No record found with ID $recordId or insufficient permissions.";
         } else {
-            echo "Record deleted successfully.";
+            // echo "Record deleted successfully.";
+            // redirect("/");
         }
     }
 }

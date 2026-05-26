@@ -8,6 +8,16 @@ class Doctor extends User {
         parent::__construct($id, $name, $email, $password, 'doctor', $phone);
     }
 
+    public function getPatients() {
+        $pdo = $this->connect();
+        $sql = "SELECT id, name, email, phone, created_at 
+                FROM users
+                WHERE role = 'patient'";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
     public function getMyPatients() {
         $pdo = $this->connect();
         $sql = "SELECT DISTINCT u.id, u.name, u.email, u.phone, u.created_at
@@ -15,7 +25,7 @@ class Doctor extends User {
                 JOIN medical_records m ON u.id = m.patient_id 
                 WHERE m.doctor_id = ?";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$this->id]); 
-        return $stmt->fetchAll(); 
+        $stmt->execute([$this->id]);
+        return $stmt->fetchAll();
     }
 }

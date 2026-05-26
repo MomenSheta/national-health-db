@@ -3,18 +3,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>my records</title>
-    <link rel="stylesheet" href="./assets/css/main.css">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+<?php
+$title = "patients";
+include "inc/head.inc.php"
+?>
 
 <body>
     <main>
-        <h2 class="text-2xl text-(--color-gray-dark)">Patients</h2>
+        <h2 class="text-2xl text-(--color-gray-dark)">My Patients</h2>
         <p class="text-sm text-(--color-gray-dark) opacity-70">View your Patients</p>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">

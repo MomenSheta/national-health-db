@@ -57,6 +57,17 @@ class MedicalRecord extends DB {
         return $stmt->fetch();
     }
 
+    public function getRecordsByDoctor() {
+        $pdo = $this->connect();
+        $stmt = $pdo->prepare("SELECT r.*, u.name AS patient_name
+                                 FROM medical_records AS r
+                                 JOIN users AS u
+                                 ON r.patient_id = u.id
+                                 WHERE r.doctor_id = ?");
+        $stmt->execute([$this->doctorId]);
+        return $stmt->fetchAll();
+    }
+
     public function getRecordsByPatient() {
         $pdo = $this->connect();
 

@@ -46,8 +46,8 @@ $router->get('/my-records', [PatientController::class, 'getMyRecords'], []); // 
 $router->get('/my-prescriptions', [PatientController::class, 'getMyPrescriptions'], []); // [patient]
 
 $router->get('/patients', [DoctorController::class, 'getPatients'], []); // [doctor]
-// $router->get('/patients/add', [DoctorController::class, ''], []); // [doctor]
 $router->get('/patients/{id}/details', [DoctorController::class, 'getPatientRecords'], []); // [doctor]
+$router->get('/medical-records', [DoctorController::class, 'getRecords'], []); // [doctor]
 
 $router->get('/record/{id}/details', [RecordController::class, 'getRecord'], []); // [doctor, patient]
 $router->get('/record/add', [RecordController::class, 'addForm'], []); // [doctor]

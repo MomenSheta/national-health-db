@@ -3,14 +3,14 @@
 class PrescriptionController {
     // Get Methods
     public function addForm($recordId) {
-        require 'views/add_prescription.php';
+        require 'views/doctor/add_prescription.php';
     }
 
     public function editForm($prescId) {
         $model = new Prescription(id: $prescId);
         $prescription = $model->getPrescriptionById();
 
-        require "views/edit_prescription.php";
+        require "views/doctor/edit_prescription.php";
     }
 
     // Post Methods
@@ -32,8 +32,8 @@ class PrescriptionController {
         );
 
         $success = $model->addPrescription();
-
-        echo $success ? "Prescription added successfully." : "Failed to add prescription.";
+        // echo $success ? "Prescription added successfully." : "Failed to add prescription.";
+        redirect("/record/$recordId/details");
     }
 
     public function updatePrescription($prescId) {
@@ -54,12 +54,13 @@ class PrescriptionController {
         );
 
         $success = $model->updatePrescription();
-        echo $success ? "Prescription updated successfully." : "Failed to update prescription.";
+        redirect("/");
+        // echo $success ? "Prescription updated successfully." : "Failed to update prescription.";
     }
 
     public function deletePrescription($prescId) {
         $model = new Prescription(id: $prescId);
         $success = $model->deletePrescription();
-        echo $success ? "Prescription deleted successfully." : "Failed to delete prescription.";
+        // echo $success ? "Prescription deleted successfully." : "Failed to delete prescription.";
     }
 }
