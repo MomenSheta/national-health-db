@@ -121,7 +121,7 @@ class RecordController {
             echo "No record found with ID $recordId or insufficient permissions.";
         } else {
             // echo "Record deleted successfully.";
-            // redirect("/");
+            redirect("/");
         }
     }
 }

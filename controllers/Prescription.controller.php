@@ -62,5 +62,6 @@ class PrescriptionController {
         $model = new Prescription(id: $prescId);
         $success = $model->deletePrescription();
         // echo $success ? "Prescription deleted successfully." : "Failed to delete prescription.";
+        redirect("/");
     }
 }

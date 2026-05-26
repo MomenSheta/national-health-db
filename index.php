@@ -45,9 +45,9 @@ $router->post('/logout', [AuthenticationController::class, 'logout'], []);  // c
 $router->get('/my-records', [PatientController::class, 'getMyRecords'], []); // [patient]
 $router->get('/my-prescriptions', [PatientController::class, 'getMyPrescriptions'], []); // [patient]
 
+$router->get('/medical-records', [DoctorController::class, 'getRecords'], []); // [doctor]
 $router->get('/patients', [DoctorController::class, 'getPatients'], []); // [doctor]
 $router->get('/patients/{id}/details', [DoctorController::class, 'getPatientRecords'], []); // [doctor]
-$router->get('/medical-records', [DoctorController::class, 'getRecords'], []); // [doctor]
 
 $router->get('/record/{id}/details', [RecordController::class, 'getRecord'], []); // [doctor, patient]
 $router->get('/record/add', [RecordController::class, 'addForm'], []); // [doctor]
