@@ -14,7 +14,7 @@
             <img src="/national-health-db/assets/images/icon.ico" alt="Logo" class="w-8 h-8 object-contain">
             <span class="text-xl font-semibold text-slate-700 tracking-tight">National Health Database System</span>
         </div>
-        <a href="/register" class="bg-blue-500 text-white px-5 py-1.5 rounded-full text-sm font-medium hover:bg-blue-600 transition shadow-sm">Register</a>
+        <a  href="<?= fixed_path('/register') ?>" class="bg-blue-500 text-white px-5 py-1.5 rounded-full text-sm font-medium hover:bg-blue-600 transition shadow-sm">Register</a>
     </header>
 
     <main class="flex-1 flex items-center justify-center py-12 px-4">
@@ -31,7 +31,7 @@
                 </div>
             <?php endif; ?>
 
-            <form action="/login" method="POST" class="space-y-5">
+            <form action="<?= fixed_path('/login') ?>" method="POST" class="space-y-5">
                 
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5 uppercase tracking-wider">Email Address</label>
@@ -71,7 +71,7 @@
                 </div>
 
                 <div class="text-center text-xs text-slate-500 pt-1">
-                    Don't have an account? <a href="register" class="text-blue-500 hover:underline font-medium">Register now</a>
+                    Don't have an account? <a href="<?= fixed_path('/register') ?>" class="text-blue-500 hover:underline font-medium">Register now</a>
                 </div>
 
                 <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-4 mt-6 text-xs text-slate-600 leading-relaxed">

@@ -31,7 +31,7 @@
                 </div>
             <?php endif; ?>
 
-            <form action="register" method="POST" class="space-y-5">
+            <form action="<?= fixed_path('/register') ?>" method="POST" class="space-y-5">
                 
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1.5 uppercase tracking-wider">Full Name</label>
