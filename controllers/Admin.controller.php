@@ -15,7 +15,18 @@ class AdminController {
     public function allUsers() {
         $user = new User();
         $usersList = $user->getAllUsers();
+        $totalUsers = count($usersList);
+        $totalDoctors = 0;
+        $totalPatients = 0;
 
+        foreach ($usersList as $u) {
+            $role = strtolower($u['role'] ?? '');
+            if ($role === 'doctor') {
+                $totalDoctors++;
+            } elseif ($role === 'patient') {
+                $totalPatients++;
+            }
+        }
         require "views/admin/dashboard.php";
     }
 

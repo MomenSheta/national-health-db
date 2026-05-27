@@ -1,3 +1,7 @@
+<?php 
+// 1. استدعاء ملف الـ Utility عشان الصفحة تتعرف على دالة fixed_path
+require_once __DIR__ . '/../util/Redirect.php'; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,49 +10,11 @@
     <title>National Health Database System - Profile</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="<?= fixed_path('/assets/css/main.css') ?>">
 </head>
 <body class="bg-slate-100 min-h-screen flex flex-col font-sans">
 
-    <header class="bg-white border-b border-gray-100 px-8 py-3 flex justify-between items-center shadow-sm">
-        <div class="flex flex-col">
-            <div class="flex items-center space-x-2 text-blue-600">
-                <img src="/national-health-db/assets/images/icon.ico" alt="Logo" class="w-6 h-6 object-contain">
-                <span class="text-lg font-bold text-slate-800 tracking-tight">National Health Database System</span>
-            </div>
-            <span class="text-xs text-gray-400 pl-8 -mt-1">Dashboard</span>
-        </div>
-        
-        <div class="flex items-center space-x-4">
-            <div class="text-right">
-                <div class="text-sm font-semibold text-slate-700"><?= htmlspecialchars($_SESSION['user_name'] ?? ($user['name'] ?? 'Nadeen Samy')) ?></div>
-                <span class="inline-block bg-purple-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                    <?= htmlspecialchars($_SESSION['user_role'] ?? ($user['role'] ?? 'Patient')) ?>
-                </span>
-            </div>
-            
-            <form action="logout" method="POST" class="inline">
-                <button type="submit" class="border border-red-200 text-red-500 hover:bg-red-50 px-4 py-1.5 rounded-xl text-sm font-medium flex items-center space-x-1.5 transition">
-                    <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
-                    <span>Logout</span>
-                </button>
-            </form>
-        </div>
-    </header>
-
-    <nav class="bg-white border-b border-gray-200 px-8 flex space-x-8 text-sm font-medium text-gray-500">
-        <a href="myrecords" class="py-3.5 hover:text-blue-600 flex items-center space-x-2 border-b-2 border-transparent">
-            <i class="fa-regular fa-file-lines text-gray-400"></i>
-            <span>Medical Records</span>
-        </a>
-        <a href="myprescreptions" class="py-3.5 hover:text-blue-600 flex items-center space-x-2 border-b-2 border-transparent">
-            <i class="fa-solid fa-link text-gray-400"></i>
-            <span>Prescriptions</span>
-        </a>
-        <a href="#" class="py-3.5 text-emerald-500 border-b-2 border-emerald-500 flex items-center space-x-2">
-            <i class="fa-regular fa-user"></i>
-            <span>Profile</span>
-        </a>
-    </nav>
+   <?php include 'navbar.php'; ?>
 
     <main class="flex-1 max-w-7xl w-full mx-auto p-8">
         
@@ -57,10 +23,11 @@
                 <h1 class="text-2xl font-bold text-slate-800">Profile</h1>
                 <p class="text-sm text-gray-400 mt-0.5">Manage your personal information and settings</p>
             </div>
-            <button class="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 shadow-sm transition">
+            
+            <a href="<?= fixed_path('/admin/users/' . ($user['id'] ?? $_SESSION['user_id'] ?? 1) . '/edit') ?>" class="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 shadow-sm transition">
                 <i class="fa-solid fa-pen text-[10px]"></i>
                 <span>Edit Profile</span>
-            </button>
+            </a>
         </div>
 
         <div class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
@@ -81,7 +48,8 @@
                         <?= htmlspecialchars($user['role'] ?? 'Patient') ?>
                     </span>
                 </div>
-<div class="max-w-2xl space-y-6">
+                
+                <div class="max-w-2xl space-y-6">
                     <h3 class="text-sm font-bold text-blue-900 border-b border-gray-100 pb-2 uppercase tracking-wide">Account Information</h3>
                     
                     <div>
@@ -123,13 +91,13 @@
                         <div class="text-sm text-slate-700 flex items-center space-x-2 bg-slate-50 p-3 rounded-xl border border-gray-100">
                             <i class="fa-regular fa-calendar text-amber-400 text-sm"></i>
                             <span class="<?= !empty($user['created_at']) ? 'text-slate-600 font-medium' : 'text-gray-400 italic' ?>">
-                            <?= !empty($user['created_at']) ? date('F Y', strtotime($user['created_at'])) : 'Recently' ?>      
-                                              </span>
+                                <?= !empty($user['created_at']) ? date('F Y', strtotime($user['created_at'])) : 'Recently' ?>      
+                            </span>
                         </div>
                     </div>
 
                     <div class="bg-blue-50/60 border border-blue-100 rounded-xl p-4 flex items-start space-x-3 mt-6">
-                        <i class="fa-regular fa-shield-halved text-blue-500 mt-0.5"></i>
+                        <i class="fa-solid fa-shield-halved text-blue-500 mt-0.5"></i>
                         <p class="text-xs text-slate-600 leading-relaxed">
                             Your account settings and personal details are encrypted and secure within the National Health Database System.
                         </p>

@@ -1,8 +1,8 @@
 <?php
 
 function fixed_path($path) {
-    $base = '/projects/national-health-db';
-    return "$base" . "$path";
+    $base = '/national-health-db';
+    return $base . $path;
 }
 
 function redirect($path) {

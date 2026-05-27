@@ -4,9 +4,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$_SESSION["user_id"] = "4";
-$_SESSION["user_name"] = "eslam";
-$_SESSION["user_role"] = "doctor";
+$_SESSION["user_id"] = "1";
+$_SESSION["user_name"] = "Nadeen Samy";
+$_SESSION["user_role"] = "admin";
 
 // $_SESSION["user_id"] = "3";
 // $_SESSION["user_name"] = "sickman";
@@ -62,9 +62,9 @@ $router->get('/presc/{id}/edit', [PrescriptionController::class, 'editForm'], []
 $router->post('/presc/{id}/edit', [PrescriptionController::class, 'updatePrescription'], []); // [doctor]
 $router->post('/presc/{id}/delete', [PrescriptionController::class, 'deletePrescription'], []); // [doctor]
 
-$router->get('/admin/users', [AdminController::class, 'allUsers'], []); // [admin]
 $router->get('/admin/users/add', [AdminController::class, 'addForm'], []); // [admin]
 $router->post('/admin/users/add', [AdminController::class, 'createUser'], []); // [admin]
+$router->get('/admin/users', [AdminController::class, 'allUsers'], []); // [admin]
 $router->get('/admin/users/{id}/edit', [AdminController::class, 'editForm'], []); // [admin]
 $router->post('/admin/users/{id}/edit', [AdminController::class, 'updateUser'], []); // [admin]
 $router->post('/admin/users/{id}/delete', [AdminController::class, 'deleteUser'], []); // [admin]

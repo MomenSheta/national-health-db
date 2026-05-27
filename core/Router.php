@@ -1,25 +1,29 @@
 <?php
-class Router {
+class Router
+{
     private $routes = [];
 
-    public function get(string $path,  $callback, $middlewares = []) {
+    public function get(string $path,  $callback, $middlewares = [])
+    {
         $this->routes['GET'][$path] = ['callback' => $callback, 'middlewares' => $middlewares];
     }
 
-    public function post(string $path,  $callback, $middlewares = []) {
+    public function post(string $path,  $callback, $middlewares = [])
+    {
         $this->routes['POST'][$path] = ['callback' => $callback, 'middlewares' => $middlewares];
     }
 
-    public function dispatch() {
+    public function dispatch()
+    {
         $method = $_SERVER['REQUEST_METHOD'];
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        
+
         // todo: remove the prefix
-        $base = '/projects/national-health-db';
+        $base = '/national-health-db';
         if (strpos($path, $base) === 0) {
             $path = substr($path, strlen($base));
         }
-
+      
         foreach ($this->routes[$method] ?? [] as $route => $data) {
             $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '([a-zA-Z0-9_]+)', $route);
             if (preg_match("#^$pattern$#", $path, $matches)) {
