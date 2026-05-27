@@ -4,7 +4,7 @@ $user_role = strtolower($_SESSION['user_role'] ?? 'patient');
 ?>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="/national-health-db/assets/css/style.css">
+<link rel="stylesheet" href="/national-health-db/assets/css/main.css">
 
 <header class="bg-white border-b border-gray-100 px-8 py-3 flex justify-between items-center shadow-sm">
     <div class="flex flex-col">
@@ -25,7 +25,7 @@ $user_role = strtolower($_SESSION['user_role'] ?? 'patient');
             </span>
         </div>
         
-        <form action="/national-health-db/logout" method="POST" class="inline">
+        <form action="/logout" method="POST" class="inline">
             <button type="submit" class="border border-red-500 text-red-500 hover:bg-red-50 px-4 py-1.5 rounded-xl text-sm font-medium flex items-center space-x-1.5 transition">
                 <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
                 <span>Logout</span>
@@ -38,7 +38,7 @@ $user_role = strtolower($_SESSION['user_role'] ?? 'patient');
     
     <?php if ($user_role === 'admin'): ?>
         <?php $is_admin_users = (strpos($current_uri, '/admin/users') !== false); ?>
-        <a href="/national-health-db/admin/users" class="py-3.5 relative flex items-center space-x-2 transition-all duration-200 <?= $is_admin_users ? 'text-blue-500 font-semibold' : 'text-gray-400 hover:text-slate-600' ?>">
+        <a href="/admin/users" class="py-3.5 relative flex items-center space-x-2 transition-all duration-200 <?= $is_admin_users ? 'text-blue-500 font-semibold' : 'text-gray-400 hover:text-slate-600' ?>">
             <i class="fa-solid fa-users-gear text-base <?= $is_admin_users ? 'text-blue-500' : 'text-gray-400' ?>"></i>
             <span>Users Management</span>
             <?php if ($is_admin_users): ?>
@@ -49,7 +49,7 @@ $user_role = strtolower($_SESSION['user_role'] ?? 'patient');
 
     <?php if ($user_role === 'patient'): ?>
         <?php $is_records = (strpos($current_uri, 'my-records') !== false); ?>
-        <a href="/national-health-db/my-records" class="py-3.5 relative flex items-center space-x-2 transition-all duration-200 <?= $is_records ? 'text-emerald-500 font-semibold' : 'text-gray-400 hover:text-slate-600' ?>">
+        <a href="/my-records" class="py-3.5 relative flex items-center space-x-2 transition-all duration-200 <?= $is_records ? 'text-emerald-500 font-semibold' : 'text-gray-400 hover:text-slate-600' ?>">
             <i class="fa-regular fa-file-lines text-base <?= $is_records ? 'text-emerald-500' : 'text-gray-400' ?>"></i>
             <span>Medical Records</span>
             <?php if ($is_records): ?>
@@ -58,7 +58,7 @@ $user_role = strtolower($_SESSION['user_role'] ?? 'patient');
         </a>
         
         <?php $is_prescriptions = (strpos($current_uri, 'my-prescriptions') !== false); ?>
-        <a href="/national-health-db/my-prescriptions" class="py-3.5 relative flex items-center space-x-2 transition-all duration-200 <?= $is_prescriptions ? 'text-emerald-500 font-semibold' : 'text-gray-400 hover:text-slate-600' ?>">
+        <a href="/my-prescriptions" class="py-3.5 relative flex items-center space-x-2 transition-all duration-200 <?= $is_prescriptions ? 'text-emerald-500 font-semibold' : 'text-gray-400 hover:text-slate-600' ?>">
             <i class="fa-solid fa-link text-base <?= $is_prescriptions ? 'text-emerald-500' : 'text-gray-400' ?>"></i>
             <span>Prescriptions</span>
             <?php if ($is_prescriptions): ?>
@@ -68,7 +68,7 @@ $user_role = strtolower($_SESSION['user_role'] ?? 'patient');
     <?php endif; ?>
     
     <?php $is_profile = (strpos($current_uri, 'profile') !== false || substr($current_uri, -20) === '/national-health-db/'); ?>
-    <a href="/national-health-db/profile" class="py-3.5 relative flex items-center space-x-2 transition-all duration-200 <?= $is_profile ? 'text-emerald-500 font-semibold' : 'text-gray-400 hover:text-slate-600' ?>">
+    <a href="/profile" class="py-3.5 relative flex items-center space-x-2 transition-all duration-200 <?= $is_profile ? 'text-emerald-500 font-semibold' : 'text-gray-400 hover:text-slate-600' ?>">
         <i class="fa-regular fa-user text-base <?= $is_profile ? 'text-emerald-500' : 'text-gray-400' ?>"></i>
         <span>Profile</span>
         <?php if ($is_profile): ?>

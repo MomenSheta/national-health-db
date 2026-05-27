@@ -1,5 +1,4 @@
 <?php 
-// 1. استدعاء ملف الـ Utility عشان الصفحة تتعرف على دالة fixed_path
 require_once __DIR__ . '/../util/Redirect.php'; 
 ?>
 <!DOCTYPE html>
