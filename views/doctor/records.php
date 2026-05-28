@@ -9,7 +9,7 @@ include "inc/head.inc.php"
 ?>
 
 <body>
-    <?php include 'views/navbar.php';?>
+    <?php include 'inc/navbar.inc.php';?>
     <main>
         <div class="flex flex-row w-full justify-between items-end">
             <div>
@@ -43,7 +43,7 @@ include "inc/head.inc.php"
                                 <a href="<?= fixed_path("/record/{$record['id']}/edit") ?>" class="btn info w-9 h-9">
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </a>
-                                <form action="<?= fixed_path("/record/{$record['id']}/delete") ?>" method="post">
+                                <form action="<?= fixed_path("/record/{$record['id']}/delete") ?>" method="post" class="inline" onsubmit="return confirm('Are you sure you want to delete this record?');">
                                     <button type="submit" class="btn danger w-9 h-9">
                                         <i class="fa-regular fa-trash-can"></i>
                                     </button>

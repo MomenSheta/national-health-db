@@ -1,6 +1,6 @@
 <head>
     <title><?= $title ?? "National Health DB" ?></title>
-    <link rel="shortcut icon" href="assets/images/icon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/assets/images/icon.ico" type="image/x-icon">
     <style>
         <?php include "assets/css/main.css" ?>
     </style>

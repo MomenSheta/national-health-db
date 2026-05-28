@@ -12,7 +12,7 @@ class RecordController
         }
 
         $model = new Doctor($userId);
-        $patients = $model->getMyPatients();
+        $patients = $model->getPatients();
         
 
         require 'views/doctor/add_record.php';

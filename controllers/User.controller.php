@@ -6,6 +6,9 @@ class UserController {
     }
 
     public function profile() {
+        $userId = $_SESSION['user_id'];
+        $model = new User($userId);
+        $user  = $model->getUserById();
         require 'views/profile.php';
     }
 }

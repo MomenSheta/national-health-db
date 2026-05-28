@@ -9,7 +9,7 @@ include "inc/head.inc.php"
 ?>
 
 <body>
-    <?php include 'views/navbar.php';?>
+    <?php include 'inc/navbar.inc.php';?>
     <main>
         <h2 class="text-2xl text-(--color-gray-dark)">Medical Records</h2>
         <p class="text-sm text-(--color-gray-dark) opacity-70">View your medical history and diagnoses</p>

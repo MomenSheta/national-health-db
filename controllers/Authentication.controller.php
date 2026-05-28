@@ -95,7 +95,7 @@ class AuthenticationController {
         session_unset();
         session_destroy();
 
-        redirect("/logout");
+        redirect("/login");
         exit();
     }
 }

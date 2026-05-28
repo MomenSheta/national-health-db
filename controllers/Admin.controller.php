@@ -72,6 +72,10 @@ class AdminController {
     }
 
     public function deleteUser($userID) {
+        if ($userID == $_SESSION['user_id']) {
+            echo "Can't delete yourself!";
+            return;
+        }
         $user = new User($userID);
         $user->deleteUser();
         redirect("/");

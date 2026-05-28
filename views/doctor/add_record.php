@@ -38,25 +38,22 @@
 </form> -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Medical Record</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-slate-50 min-h-screen flex flex-col font-sans">
+<?php
+$title = "Edit User Info";
+include "inc/head.inc.php";
+?>
 
-    <?php include __DIR__ . '/../navbar.php'; ?>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans">
+    <?php include "inc/navbar.inc.php" ?>
 
     <main class="flex-1 max-w-3xl w-full mx-auto p-8">
-        
+
         <div class="flex justify-between items-center mb-6">
             <div>
                 <h1 class="text-2xl font-bold text-slate-800">Create Medical Record</h1>
                 <p class="text-sm text-gray-400 mt-0.5">Add a new medical record to the patient's history</p>
             </div>
-            
+
             <a href="javascript:history.back()" class="border border-gray-200 text-slate-600 bg-white hover:bg-slate-50 px-4 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition shadow-sm">
                 <i class="fa-solid fa-arrow-left text-[10px]"></i>
                 <span>Cancel</span>
@@ -64,8 +61,8 @@
         </div>
 
         <div class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden p-8">
-            
-            <form action="<?= fixed_path('/record/add') ?>" method="POST" class="space-y-6">                
+
+            <form action="<?= fixed_path('/record/add') ?>" method="POST" class="space-y-6">
                 <div>
                     <label for="patientId" class="text-xs font-bold text-slate-700 block mb-2 uppercase tracking-wide">Patient Name</label>
                     <div class="relative">
@@ -132,4 +129,5 @@
     </main>
 
 </body>
+
 </html>

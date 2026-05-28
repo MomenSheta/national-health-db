@@ -46,10 +46,25 @@ body {
     width: 100%;
 }
 
-body main {
-    padding: 2rem 1rem;
-    margin: auto;
-    max-width: 80rem;
+body {
+
+    main {
+        padding: 2rem 1rem;
+        margin: auto;
+        max-width: 80rem;
+    }
+    header, nav {
+        margin: auto;
+        max-width: 80rem;
+        border: none;
+        box-shadow: none;
+        padding-inline: 1rem;
+    }
+}
+
+
+img {
+    user-select: none;
 }
 
 hr {

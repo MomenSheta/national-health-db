@@ -11,7 +11,7 @@ include "inc/head.inc.php"
     <main >
         <div class="flex flex-row justify-between w-full">
             <h1 class="text-2xl text-(--color-gray-dark) font-bold capitalize">record details</h1>
-            <a href="<?= fixed_path("/") ?>" class="btn info w-fit capitalize">back home</a>
+            <a href="javascript:history.back()" class="btn info w-fit capitalize">back</a>
         </div>
 
         <div class="space-y-4 relative">
@@ -39,7 +39,7 @@ include "inc/head.inc.php"
 
             <?php if ($_SESSION["user_role"] == "doctor") { ?>
                 <div class="absolute right-0 bottom-0 flex flex-row gap-4">
-                    <form action="<?= fixed_path("/record/{$record['id']}/delete") ?>" method="post">
+                    <form action="<?= fixed_path("/record/{$record['id']}/delete") ?>" method="post" class="inline" onsubmit="return confirm('Are you sure you want to delete this record?');">
                         <button type="submit" class="btn danger w-fit">
                             <i class="fa-regular fa-trash-can"></i> Delete record
                         </button>
@@ -87,7 +87,7 @@ include "inc/head.inc.php"
                                     <a href="<?= fixed_path("/presc/{$prescription['id']}/edit") ?>" class="btn info w-9 h-9">
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </a>
-                                    <form action="<?= fixed_path("/presc/{$prescription['id']}/delete") ?>" method="post">
+                                    <form action="<?= fixed_path("/presc/{$prescription['id']}/delete") ?>" method="post" class="inline" onsubmit="return confirm('Are you sure you want to delete this prescription?');">
                                         <button type="submit" class="btn danger w-9 h-9">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
