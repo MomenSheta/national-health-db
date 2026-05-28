@@ -9,6 +9,7 @@ include "inc/head.inc.php"
 ?>
 
 <body>
+    <?php include 'views/navbar.php';?>
     <main>
         <div class="flex flex-row w-full justify-between items-end">
             <div>
