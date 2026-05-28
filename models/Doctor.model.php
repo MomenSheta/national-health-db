@@ -20,12 +20,11 @@ class Doctor extends User {
 
     public function getMyPatients() {
         $pdo = $this->connect();
-        $sql = "SELECT DISTINCT u.id, u.name, u.email, u.phone, u.created_at
-                FROM users u 
-                JOIN medical_records m ON u.id = m.patient_id 
-                WHERE m.doctor_id = ?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$this->id]);
+        $sql = "SELECT id, name, email, phone, created_at 
+            FROM users 
+            WHERE role = 'patient' 
+            ORDER BY name ASC"; $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
         return $stmt->fetchAll();
     }
 }

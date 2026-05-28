@@ -1,8 +1,10 @@
 <?php
 
-class RecordController {
+class RecordController
+{
 
-    public function addForm() {
+    public function addForm()
+    {
         $userId = $_SESSION['user_id'];
 
         if (isset($_GET["patient"])) {
@@ -10,12 +12,14 @@ class RecordController {
         }
 
         $model = new Doctor($userId);
-        $patients = $model->getPatients();
+        $patients = $model->getMyPatients();
+        
 
         require 'views/doctor/add_record.php';
     }
 
-    public function editForm($recordId) {
+    public function editForm($recordId)
+    {
         $userId = $_SESSION['user_id'];
 
         $model = new MedicalRecord(id: $recordId, doctorId: $userId);
@@ -25,7 +29,8 @@ class RecordController {
     }
 
     // create
-    public function createRecord() {
+    public function createRecord()
+    {
         $userId = $_SESSION['user_id'];
 
         $patientId = $_POST['patientId'] ?? null;
@@ -60,7 +65,8 @@ class RecordController {
     }
 
     // read
-    public function getRecord($recordId) {
+    public function getRecord($recordId)
+    {
         $userId = $_SESSION['user_id'];
         $role = $_SESSION['user_role'];
 
@@ -87,7 +93,8 @@ class RecordController {
     }
 
     // update
-    public function updateRecord($recordId) {
+    public function updateRecord($recordId)
+    {
         $userId = $_SESSION['user_id'];
         $diagnosis = $_POST['diagnosis'] ?? null;
         $notes     = $_POST['notes'] ?? null;
@@ -111,7 +118,8 @@ class RecordController {
     }
 
     // delete
-    public function deleteRecord($recordId) {
+    public function deleteRecord($recordId)
+    {
         $userId = $_SESSION['user_id'];
 
         $model   = new MedicalRecord(id: $recordId, doctorId: $userId);

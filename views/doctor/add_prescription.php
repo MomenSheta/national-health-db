@@ -1,19 +1,78 @@
-<h2>Add Prescription</h2>
-<form action="#" method="POST">
-    <label for="medicationName">Medication Name:</label>
-    <input type="text" name="medicationName" required><br/>
+<?php /** @var int $recordId */ ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Prescription</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans">
 
-    <br />
+    <?php include __DIR__ . '/../navbar.php'; ?>
 
-    <label for="dosage">Dosage:</label>
-    <input type="text" name="dosage" required><br/>
-    
-    <br />
+    <main class="flex-1 max-w-3xl w-full mx-auto p-8">
+        
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-800">Add Prescription</h1>
+                <p class="text-sm text-gray-400 mt-0.5">Create a new medication plan for Record ID: #<?= htmlspecialchars($recordId); ?></p>
+            </div>
+            
+            <a href="javascript:history.back()" class="border border-gray-200 text-slate-600 bg-white hover:bg-slate-50 px-4 py-2 rounded-xl text-xs font-semibold flex items-center space-x-1.5 transition shadow-sm">
+                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                <span>Cancel</span>
+            </a>
+        </div>
 
-    <label for="instructions">Instructions:</label>
-    <textarea name="instructions"></textarea><br/>
-    
-    <br />
+        <div class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden p-8">
+            
+            <form action="<?= fixed_path('/presc/add/' . $recordId) ?>" method="POST" class="space-y-6">                
+                
+                <input type="hidden" name="recordId" value="<?= htmlspecialchars($recordId); ?>">
+                
+                <div>
+                    <label for="medicationName" class="text-xs font-bold text-slate-700 block mb-2 uppercase tracking-wide">Medication Name</label>
+                    <div class="relative">
+                        <input type="text" name="medicationName" id="medicationName" placeholder="e.g., Amoxicillin 500mg" class="w-full bg-slate-50 text-sm text-slate-700 p-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:border-teal-400 focus:bg-white transition" required>
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-capsules text-sm"></i>
+                        </div>
+                    </div>
+                </div>
 
-    <button type="submit">Add Prescription</button>
-</form>
+                <div>
+                    <label for="dosage" class="text-xs font-bold text-slate-700 block mb-2 uppercase tracking-wide">Dosage (Frequency)</label>
+                    <div class="relative">
+                        <input type="text" name="dosage" id="dosage" placeholder="e.g., 1 tablet - 3 times a day" class="w-full bg-slate-50 text-sm text-slate-700 p-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:border-teal-400 focus:bg-white transition" required>
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                            <i class="fa-solid fa-clock text-sm"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="instructions" class="text-xs font-bold text-slate-700 block mb-2 uppercase tracking-wide">Instructions / Special Notes</label>
+                    <div class="relative">
+                        <textarea name="instructions" id="instructions" rows="4" placeholder="e.g., Take after meals, complete the full course..." class="w-full bg-slate-50 text-sm text-slate-700 p-3 pl-10 rounded-xl border border-gray-200 focus:outline-none focus:border-teal-400 focus:bg-white transition resize-none"></textarea>
+                        <div class="absolute top-3.5 left-3.5 text-slate-400">
+                            <i class="fa-regular fa-comment-dots text-sm"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-gray-100 flex justify-end">
+                    <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold flex items-center space-x-2 shadow-md transition-all">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                        <span>Add Prescription</span>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </main>
+
+</body>
+</html>

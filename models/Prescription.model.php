@@ -11,10 +11,10 @@ class Prescription extends DB {
     public function __construct($id = null, $recordId = null, $patientId = null, $medicationName = null, $dosage = null, $instructions = null) {
         $this->id = $id;
         $this->recordId = $recordId;
+        $this->patientId = $patientId;
         $this->medicationName = $medicationName;
         $this->dosage = $dosage;
         $this->instructions = $instructions;
-        $this->patientId = $patientId;
     }
 
     public function addPrescription() {

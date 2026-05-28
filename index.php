@@ -5,8 +5,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $_SESSION["user_id"] = "1";
-$_SESSION["user_name"] = "Nadeen Samy";
-$_SESSION["user_role"] = "admin";
+$_SESSION["user_name"] = "nadeen";
+$_SESSION["user_role"] = "doctor";
 
 // $_SESSION["user_id"] = "3";
 // $_SESSION["user_name"] = "sickman";
