@@ -1,4 +1,4 @@
-<?php if (!isset($records) || !$records) return; ?>
+<?php if (!isset($records) || $records === null) return; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,12 +9,15 @@ include "inc/head.inc.php"
 ?>
 
 <body>
-    <?php include 'inc/navbar.inc.php';?>
+    <?php include 'inc/navbar.inc.php'; ?>
     <main>
         <h2 class="text-2xl text-(--color-gray-dark)">Medical Records</h2>
         <p class="text-sm text-(--color-gray-dark) opacity-70">View your medical history and diagnoses</p>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+
+            <!-- todo: add better UI for no data yet -->
+            <?= empty($records) ? "there is no records yet" : "" ?>
 
             <!-- medical records cards -->
             <?php foreach ($records as $record) { ?>

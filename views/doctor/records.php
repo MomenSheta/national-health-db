@@ -1,4 +1,4 @@
-<?php if (!isset($records) || !$records) return; ?>
+<?php if (!isset($records) || $records === null) return; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,6 +23,8 @@ include "inc/head.inc.php"
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+            <!-- todo: add better UI for no data yet -->
+            <?= empty($records) ? "there is no records yet" : "" ?>
 
             <?php foreach ($records as $record) { ?>
                 <div class="rounded-xl p-6 shadow-sm border border-(--color-gray-dark)/10 hover:shadow-md transition-shadow">

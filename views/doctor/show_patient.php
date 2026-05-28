@@ -49,8 +49,12 @@ include "inc/head.inc.php"
             <?php } ?>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+
+
             <?php
             if (isset($records) && $records) {
+                //  todo: add better UI for no data yet 
+                empty($records) ? "there is no records yet" : "";
                 foreach ($records as $record) {
             ?>
                     <div class="rounded-xl p-6 shadow-sm border border-(--color-gray-dark)/10 hover:shadow-md transition-shadow">

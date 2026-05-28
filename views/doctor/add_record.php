@@ -43,7 +43,7 @@ $title = "Edit User Info";
 include "inc/head.inc.php";
 ?>
 
-<body class="bg-slate-50 min-h-screen flex flex-col font-sans">
+<body class="bg-slate-50 flex flex-col font-sans">
     <?php include "inc/navbar.inc.php" ?>
 
     <main class="flex-1 max-w-3xl w-full mx-auto p-8">

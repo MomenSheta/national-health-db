@@ -1,4 +1,4 @@
-<?php if (!isset($prescriptions) || !$prescriptions) return; ?>
+<?php if (!isset($prescriptions) || $prescriptions === null) return; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,12 +9,15 @@ include "inc/head.inc.php"
 ?>
 
 <body>
-    <?php include 'inc/navbar.inc.php';?>
+    <?php include 'inc/navbar.inc.php'; ?>
     <main>
         <h2 class="text-2xl text-(--color-gray-dark)">Prescriptions</h2>
         <p class="text-sm text-(--color-gray-dark) opacity-70">View and manage your prescriptions</p>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+
+            <!-- todo: add better UI for no data yet -->
+            <?= empty($prescriptions) ? "there is no prescriptions yet" : "" ?>
 
             <?php foreach ($prescriptions as $prescription) { ?>
 

@@ -1,16 +1,14 @@
 <?php if (!isset($prescription) || !$prescription) return; ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Prescription - #<?= htmlspecialchars($prescription['id']); ?></title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-slate-50 min-h-screen flex flex-col font-sans">
+<?php
+$title = "Edit Prescription";
+include "inc/head.inc.php";
+?>
 
-    <?php include __DIR__ . '/../navbar.php'; ?>
+<body class=" flex flex-col font-sans">
+    <?php include "inc/navbar.inc.php" ?>
+
 
     <main class="flex-1 max-w-3xl w-full mx-auto p-8">
         

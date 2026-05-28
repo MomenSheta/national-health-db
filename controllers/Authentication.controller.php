@@ -30,19 +30,12 @@ class AuthenticationController {
             $userData = $userModel->login();
 
             if ($userData) {
-                session_regenerate_id(true);
+                // session_regenerate_id(true);
                 $_SESSION['user_id'] = $userData['id'];
                 $_SESSION['user_name'] = $userData['name'];
                 $_SESSION['user_role'] = $userData['role'];
                 $_SESSION['is_logged_in'] = true;
-
-                if ($userData['role'] === 'admin') {
-                    redirect("/views/dashboard_admin.php");
-                } elseif ($userData['role'] === 'doctor') {
-                    redirect("/views/dashboard_doctor.php");
-                } elseif ($userData['role'] === 'patient') {
-                    redirect("/views/dashboard_patient.php");
-                }
+                redirect('/');
                 exit();
             } else {
                 $_SESSION['error'] = "Email or password is incorrect";
@@ -55,6 +48,7 @@ class AuthenticationController {
     public function registerForm() {
         include "views/register.php";
     }
+
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = trim($_POST['name']);
@@ -68,7 +62,7 @@ class AuthenticationController {
 
             if (!empty($validationErrors)) {
                 $_SESSION['error'] = $validationErrors[0];
-                redirect("/views/register.php");
+                redirect("/register");
                 exit();
             }
 
