@@ -13,7 +13,15 @@ class AdminController {
     }
 
     public function allUsers() {
-        $user = new User();
+        $search_result = null;
+        if (isset($_GET["search"])) {
+            $search_val = $_GET["search"];
+            $user = new User(name: $search_val);
+            $search_result = $user->searchByName();
+        } else {
+            $user = new User();
+        }
+
         $usersList = $user->getAllUsers();
         $totalUsers = count($usersList);
         $totalDoctors = 0;
@@ -27,6 +35,7 @@ class AdminController {
                 $totalPatients++;
             }
         }
+        if ($search_result !== null) $usersList = $search_result;
         require "views/admin/dashboard.php";
     }
 

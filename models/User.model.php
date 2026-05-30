@@ -67,4 +67,11 @@ class User extends DB {
         $stmt->execute([$this->id]);
         return $stmt->fetch();
     }
+
+    public function searchByName() {
+        $pdo = $this->connect();
+        $stmt = $pdo->prepare("SELECT id, name, email, role, phone, created_at FROM users WHERE name Like ?");
+        $stmt->execute(["%" . $this->name . "%"]);
+        return $stmt->fetchAll();
+    }
 }

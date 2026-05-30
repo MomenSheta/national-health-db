@@ -21,11 +21,23 @@
         </div>
 
         <div class="bg-white rounded-2xl border border-gray-100 p-4 mb-6 shadow-sm">
-            <div class="relative flex items-center">
+            <div class="relative flex items-center justify-center gap-4">
                 <i class="fa-solid fa-magnifying-glass text-gray-400 absolute left-4 text-sm"></i>
-                <input type="text" placeholder="Search users by name or email..."
-                    class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition">
+                <form action="" method="GET" class="w-full">
+                    <input
+                        name="search"
+                        type="text"
+                        placeholder="Search users by name or email..."
+                        value="<?= isset($_GET['search']) ? $_GET['search'] : ""  ?>"
+                        class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 placeholder-gray-400 focus:outline-none focus:border-blue-400 transition">
+                </form>
+                <?php if (isset($_GET['search'])) { ?>
+                    <a href="<?= fixed_path('/admin/users') ?>" class="text-(--color-gray-dark) hover:text-(--color-gray-dark)/80 transition">
+                        <i class="fa-solid fa-xmark"></i>
+                    </a>
+                <?php } ?>
             </div>
+
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -96,6 +108,10 @@
                 </table>
             </div>
         </div>
+
+        <?php if (isset($_GET['search'])) { ?>
+            <a href="<?= fixed_path('/admin/users') ?>" class="btn classic w-fit mx-auto my-8">clear search</a>
+        <?php } ?>
     </main>
 </body>
 

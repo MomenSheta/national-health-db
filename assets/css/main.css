@@ -86,6 +86,19 @@ hr {
     font-size: small;
     white-space: nowrap;
 
+
+
+
+    &.classic {
+        border-color: var(--color-gray-dark);
+        color: var(--color-gray-dark);
+
+        &:hover {
+            color: var(--color-white);
+            background: var(--color-gray-dark);
+        }
+    }
+
     &.info {
         border-color: var(--deep-blue);
         color: var(--deep-blue);
