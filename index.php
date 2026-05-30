@@ -4,14 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$_SESSION["user_id"] = "1";
-$_SESSION["user_name"] = "nadeen";
-$_SESSION["user_role"] = "doctor";
-
-// $_SESSION["user_id"] = "3";
-// $_SESSION["user_name"] = "sickman";
-// $_SESSION["user_role"] = "patient";
-
 // todo: add auto_loader
 require "core/Router.php";
 require "util/Redirect.php";
@@ -32,42 +24,56 @@ require "controllers/Admin.controller.php";
 require "controllers/Doctor.controller.php";
 require "controllers/Patient.controller.php";
 
+
+$adminMW = function () {
+    return checkRoleMiddleware(['admin']);
+};
+$doctorMW = function () {
+    return checkRoleMiddleware(['doctor']);
+};
+$patientMW = function () {
+    return checkRoleMiddleware(['patient']);
+};
+$doctorOrPatientMW = function () {
+    return checkRoleMiddleware(['admin', 'doctor']);
+};
+
 $router = new Router();
-$router->get('/', [UserController::class, 'home'], []); // check auth
-$router->get('/profile', [UserController::class, 'profile'], []); // check auth
+$router->get('/', [UserController::class, 'home'], ["authMiddleware"]); // check auth
+$router->get('/profile', [UserController::class, 'profile'], ["authMiddleware"]); // check auth
 
 $router->get('/register', [AuthenticationController::class, 'registerForm'], []); // should be not auth
 $router->post('/register', [AuthenticationController::class, 'register'], []); // should be not auth
 $router->get('/login', [AuthenticationController::class, 'loginForm'], []); // should be not auth
 $router->post('/login', [AuthenticationController::class, 'login'], []); // should be not auth
-$router->post('/logout', [AuthenticationController::class, 'logout'], []);  // check auth
+$router->post('/logout', [AuthenticationController::class, 'logout'], ["authMiddleware"]);  // check auth
 
-$router->get('/my-records', [PatientController::class, 'getMyRecords'], []); // [patient]
-$router->get('/my-prescriptions', [PatientController::class, 'getMyPrescriptions'], []); // [patient]
+$router->get('/my-records', [PatientController::class, 'getMyRecords'], ["authMiddleware", $patientMW]); // [patient]
+$router->get('/my-prescriptions', [PatientController::class, 'getMyPrescriptions'], ["authMiddleware", $patientMW]); // [patient]
 
-$router->get('/medical-records', [DoctorController::class, 'getRecords'], []); // [doctor]
-$router->get('/patients', [DoctorController::class, 'getPatients'], []); // [doctor]
-$router->get('/patients/{id}/details', [DoctorController::class, 'getPatientRecords'], []); // [doctor]
+$router->get('/medical-records', [DoctorController::class, 'getRecords'], ["authMiddleware", $doctorMW]); // [doctor]
+$router->get('/patients', [DoctorController::class, 'getPatients'], ["authMiddleware", $doctorMW]); // [doctor]
+$router->get('/patients/{id}/details', [DoctorController::class, 'getPatientRecords'], ["authMiddleware", $doctorMW]); // [doctor]
 
-$router->get('/record/{id}/details', [RecordController::class, 'getRecord'], []); // [doctor, patient]
-$router->get('/record/add', [RecordController::class, 'addForm'], []); // [doctor]
-$router->post('/record/add', [RecordController::class, 'createRecord'], []); // [doctor]
-$router->get('/record/{id}/edit', [RecordController::class, 'editForm'], []); // [doctor]
-$router->post('/record/{id}/edit', [RecordController::class, 'updateRecord'], []); // [doctor]
-$router->post('/record/{id}/delete', [RecordController::class, 'deleteRecord'], []); // [doctor]
+$router->get('/record/{id}/details', [RecordController::class, 'getRecord'], ["authMiddleware", $doctorOrPatientMW]); // [doctor, patient]
+$router->get('/record/add', [RecordController::class, 'addForm'], ["authMiddleware", $doctorMW]); // [doctor]
+$router->post('/record/add', [RecordController::class, 'createRecord'], ["authMiddleware", $doctorMW]); // [doctor]
+$router->get('/record/{id}/edit', [RecordController::class, 'editForm'], ["authMiddleware", $doctorMW]); // [doctor]
+$router->post('/record/{id}/edit', [RecordController::class, 'updateRecord'], ["authMiddleware", $doctorMW]); // [doctor]
+$router->post('/record/{id}/delete', [RecordController::class, 'deleteRecord'], ["authMiddleware", $doctorMW]); // [doctor]
 
-$router->get('/presc/add/{recordId}', [PrescriptionController::class, 'addForm'], []); // [doctor]
-$router->post('/presc/add/{recordId}', [PrescriptionController::class, 'createPrescription'], []); // [doctor]
-$router->get('/presc/{id}/edit', [PrescriptionController::class, 'editForm'], []); // [doctor]
-$router->post('/presc/{id}/edit', [PrescriptionController::class, 'updatePrescription'], []); // [doctor]
-$router->post('/presc/{id}/delete', [PrescriptionController::class, 'deletePrescription'], []); // [doctor]
+$router->get('/presc/add/{recordId}', [PrescriptionController::class, 'addForm'], ["authMiddleware", $doctorMW]); // [doctor]
+$router->post('/presc/add/{recordId}', [PrescriptionController::class, 'createPrescription'], ["authMiddleware", $doctorMW]); // [doctor]
+$router->get('/presc/{id}/edit', [PrescriptionController::class, 'editForm'], ["authMiddleware", $doctorMW]); // [doctor]
+$router->post('/presc/{id}/edit', [PrescriptionController::class, 'updatePrescription'], ["authMiddleware", $doctorMW]); // [doctor]
+$router->post('/presc/{id}/delete', [PrescriptionController::class, 'deletePrescription'], ["authMiddleware", $doctorMW]); // [doctor]
 
-$router->get('/admin/users/add', [AdminController::class, 'addForm'], []); // [admin]
-$router->post('/admin/users/add', [AdminController::class, 'createUser'], []); // [admin]
-$router->get('/admin/users', [AdminController::class, 'allUsers'], []); // [admin]
-$router->get('/admin/users/{id}/edit', [AdminController::class, 'editForm'], []); // [admin]
-$router->post('/admin/users/{id}/edit', [AdminController::class, 'updateUser'], []); // [admin]
-$router->post('/admin/users/{id}/delete', [AdminController::class, 'deleteUser'], []); // [admin]
+$router->get('/admin/users', [AdminController::class, 'allUsers'], ["authMiddleware", $adminMW]); // [admin]
+$router->get('/admin/users/add', [AdminController::class, 'addForm'], ["authMiddleware", $adminMW]); // [admin]
+$router->post('/admin/users/add', [AdminController::class, 'createUser'], ["authMiddleware", $adminMW]); // [admin]
+$router->get('/admin/users/{id}/edit', [AdminController::class, 'editForm'], ["authMiddleware", $adminMW]); // [admin]
+$router->post('/admin/users/{id}/edit', [AdminController::class, 'updateUser'], ["authMiddleware", $adminMW]); // [admin]
+$router->post('/admin/users/{id}/delete', [AdminController::class, 'deleteUser'], ["authMiddleware", $adminMW]); // [admin]
 
 $router->dispatch();
 
