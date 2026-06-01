@@ -17,8 +17,7 @@ class AuthenticationController {
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
 
-            $validator = new ValidationController();
-            $validationErrors = $validator->validateLogin($email, $password);
+            $validationErrors = ValidationController::validateLogin($email, $password);
 
             if (!empty($validationErrors)) {
                 $_SESSION['error'] = $validationErrors[0];
@@ -57,8 +56,7 @@ class AuthenticationController {
             $phone = trim($_POST['phone']);
             $role = trim($_POST['role']);
 
-            $validator = new ValidationController();
-            $validationErrors = $validator->validateRegistration($name, $email, $password, $phone, $role);
+            $validationErrors = ValidationController::validateRegistration($name, $email, $password, $phone, $role);
 
             if (!empty($validationErrors)) {
                 $_SESSION['error'] = $validationErrors[0];

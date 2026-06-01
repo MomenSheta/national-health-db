@@ -1,10 +1,8 @@
 <?php
 
-class RecordController
-{
+class RecordController {
 
-    public function addForm()
-    {
+    public function addForm() {
         $userId = $_SESSION['user_id'];
 
         if (isset($_GET["patient"])) {
@@ -13,13 +11,11 @@ class RecordController
 
         $model = new Doctor($userId);
         $patients = $model->getPatients();
-        
 
         require 'views/doctor/add_record.php';
     }
 
-    public function editForm($recordId)
-    {
+    public function editForm($recordId) {
         $userId = $_SESSION['user_id'];
 
         $model = new MedicalRecord(id: $recordId, doctorId: $userId);
@@ -29,8 +25,7 @@ class RecordController
     }
 
     // create
-    public function createRecord()
-    {
+    public function createRecord() {
         $userId = $_SESSION['user_id'];
 
         $patientId = $_POST['patientId'] ?? null;
@@ -40,10 +35,17 @@ class RecordController
 
         // Validate required fields
         if (!$patientId || !$diagnosis || !$visitDate) {
-            echo "Missing required fields.";
-            return;
+            $_SESSION['error'] = "Missing required fields.";
+            redirect("/record/add");
+            exit();
         }
-        // todo: add validation
+
+        $validationErrors = ValidationController::validateRecord($diagnosis, $visitDate);
+        if (!empty($validationErrors)) {
+            $_SESSION['error'] = $validationErrors[0];
+            redirect("/record/add");
+            exit();
+        }
 
         $model = new MedicalRecord(
             patientId: $patientId,
@@ -53,19 +55,17 @@ class RecordController
             visitDate: $visitDate
         );
 
-        $success = $model->createRecord();
-
-        if (!$success) {
-            echo "Failed to create record for patient ID $patientId.";
+        if ($model->createRecord()) {
+            $_SESSION['success'] = "Record created successfully for patient ID $patientId.";
         } else {
-            // echo "Record created successfully for patient ID $patientId.";
-            redirect("/");
+            $_SESSION['error'] = "Failed to create record for patient ID $patientId.";
         }
+        redirect("/");
+        exit();
     }
 
     // read
-    public function getRecord($recordId)
-    {
+    public function getRecord($recordId) {
         $userId = $_SESSION['user_id'];
         $role = $_SESSION['user_role'];
 
@@ -92,12 +92,19 @@ class RecordController
     }
 
     // update
-    public function updateRecord($recordId)
-    {
+    public function updateRecord($recordId) {
         $userId = $_SESSION['user_id'];
         $diagnosis = $_POST['diagnosis'] ?? null;
-        $notes     = $_POST['notes'] ?? null;
-        // todo: add validation
+        $notes = $_POST['notes'] ?? null;
+        $visitDate = $_POST['visitDate'] ?? null;
+
+        $validationErrors = ValidationController::validateRecord($diagnosis, $visitDate);
+        if (!empty($validationErrors)) {
+            $_SESSION['error'] = $validationErrors[0];
+            redirect("/");
+            exit();
+        }
+
         $model = new MedicalRecord(
             id: $recordId,
             doctorId: $userId,
@@ -105,30 +112,25 @@ class RecordController
             notes: $notes
         );
 
-        $success = $model->updateRecord();
-
-        if (!$success) {
-            echo "Update failed or record not found.";
+        if ($model->updateRecord()) {
+            $_SESSION['success'] = "Record updated successfully.";
         } else {
-            // echo "Record updated successfully.";
-            // redirect("/record/$recordId/details");
-            redirect("/");
+            $_SESSION['error'] = "Update failed or record not found.";
         }
+        redirect("/");
+        exit();
     }
 
     // delete
-    public function deleteRecord($recordId)
-    {
+    public function deleteRecord($recordId) {
         $userId = $_SESSION['user_id'];
-
-        $model   = new MedicalRecord(id: $recordId, doctorId: $userId);
-        $success = $model->deleteRecord();
-
-        if (!$success) {
-            echo "No record found with ID $recordId or insufficient permissions.";
+        $model = new MedicalRecord(id: $recordId, doctorId: $userId);
+        if ($model->deleteRecord()) {
+            $_SESSION['success'] = "User deleted successfully!";
         } else {
-            // echo "Record deleted successfully.";
-            redirect("/");
+            $_SESSION['error'] = "No record found with ID $recordId";
         }
+        redirect("/");
+        exit();
     }
 }

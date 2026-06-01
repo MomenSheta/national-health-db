@@ -47,8 +47,14 @@ class AdminController {
         $userRole = $_POST['role'] ?? null;
         $userPhone = $_POST['phone'] ?? null;
 
-        // todo: add validation
-        
+        $validationErrors = ValidationController::validateRegistration($userName, $userEmail, $userPassword, $userPhone, $userRole);
+
+        if (!empty($validationErrors)) {
+            $_SESSION['error'] = $validationErrors[0];
+            redirect("/admin/users/add");
+            exit();
+        }
+
         $hashedPassword = password_hash($userPassword, PASSWORD_BCRYPT);
         $user = new User(
             name: $userName,
@@ -57,7 +63,12 @@ class AdminController {
             role: $userRole,
             phone: $userPhone
         );
-        $user->createUser();
+
+        if ($user->createUser()) {
+            $_SESSION['success'] = "User created successfully!";
+        } else {
+            $_SESSION['error'] = "Something went wrong, please try again.";
+        }
         redirect("/");
         exit();
     }
@@ -67,26 +78,35 @@ class AdminController {
         $userEmail = $_POST['email'] ?? null;
         $userPhone = $_POST['phone'] ?? null;
 
-        // todo: add validation
         if (!$userName || !$userEmail || !$userPhone) {
-            echo "Missing required fields.";
-            return;
+            $_SESSION['error'] = "Missing required fields.";
+            redirect("/admin/users/add");
+            exit();
         }
 
         $user = new User($userID, $userName, $userEmail, phone: $userPhone);
-        $user->updateProfile();
-
+        if ($user->updateProfile()) {
+            $_SESSION['success'] = "User updated successfully!";
+        } else {
+            $_SESSION['error'] = "Something went wrong, please try again.";
+        }
         redirect("/");
         exit();
     }
 
     public function deleteUser($userID) {
         if ($userID == $_SESSION['user_id']) {
-            echo "Can't delete yourself!";
-            return;
+            $_SESSION['error'] = "Can't delete yourself!";
+            redirect("/");
+            exit();
         }
+        
         $user = new User($userID);
-        $user->deleteUser();
+        if ($user->deleteUser()) {
+            $_SESSION['success'] = "User deleted successfully!";
+        } else {
+            $_SESSION['error'] = "Something went wrong, please try again.";
+        }
         redirect("/");
         exit();
     }

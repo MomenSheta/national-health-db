@@ -13,17 +13,25 @@ class PrescriptionController {
         require "views/doctor/edit_prescription.php";
     }
 
-    // Post Methods
+    // POST Methods
     public function createPrescription($recordId) {
         $medicationName = $_POST['medicationName'] ?? null;
-        $dosage         = $_POST['dosage'] ?? null;
-        $instructions   = $_POST['instructions'] ?? null;
+        $dosage = $_POST['dosage'] ?? null;
+        $instructions = $_POST['instructions'] ?? null;
 
-        if (!$medicationName || !$dosage) {
-            echo "Missing required fields.";
-            return;
+        if (!$medicationName || !$dosage || !$instructions) {
+            $_SESSION['error'] = "Missing required fields.";
+            redirect("/");
+            exit();
         }
-        // todo: add validation
+
+        $validationErrors = ValidationController::validatePrescription($medicationName, $dosage, $instructions);
+        if (!empty($validationErrors)) {
+            $_SESSION['error'] = $validationErrors[0];
+            redirect("/");
+            exit();
+        }
+
         $model = new Prescription(
             recordId: $recordId,
             medicationName: $medicationName,
@@ -31,9 +39,13 @@ class PrescriptionController {
             instructions: $instructions
         );
 
-        $success = $model->addPrescription();
-        // echo $success ? "Prescription added successfully." : "Failed to add prescription.";
+        if ($model->addPrescription()) {
+            $_SESSION['success'] = "Prescription added successfully.";
+        } else {
+            $_SESSION['error'] = "Failed to add prescription.";
+        }
         redirect("/record/$recordId/details");
+        exit();
     }
 
     public function updatePrescription($prescId) {
@@ -41,11 +53,19 @@ class PrescriptionController {
         $dosage = $_POST['dosage'] ?? null;
         $instructions = $_POST['instructions'] ?? null;
 
-        if (!$medicationName || !$dosage) {
-            echo "Missing required fields.";
-            return;
+        if (!$medicationName || !$dosage || !$instructions) {
+            $_SESSION['error'] = "Missing required fields.";
+            redirect("/");
+            exit();
         }
-        // todo: add validation
+
+        $validationErrors = ValidationController::validatePrescription($medicationName, $dosage, $instructions);
+        if (!empty($validationErrors)) {
+            $_SESSION['error'] = $validationErrors[0];
+            redirect("/");
+            exit();
+        }
+
         $model = new Prescription(
             id: $prescId,
             medicationName: $medicationName,
@@ -53,15 +73,23 @@ class PrescriptionController {
             instructions: $instructions
         );
 
-        $success = $model->updatePrescription();
+        if ($model->updatePrescription()) {
+            $_SESSION['success'] = "Prescription updated successfully.";
+        } else {
+            $_SESSION['error'] = "Failed to update prescription.";
+        }
         redirect("/");
-        // echo $success ? "Prescription updated successfully." : "Failed to update prescription.";
+        exit();
     }
 
     public function deletePrescription($prescId) {
         $model = new Prescription(id: $prescId);
-        $success = $model->deletePrescription();
-        // echo $success ? "Prescription deleted successfully." : "Failed to delete prescription.";
+        if ($model->deletePrescription()) {
+            $_SESSION['success'] = "Prescription deleted successfully.";
+        } else {
+            $_SESSION['error'] = "Failed to delete prescription.";
+        }
         redirect("/");
+        exit();
     }
 }

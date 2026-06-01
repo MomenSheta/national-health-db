@@ -1,8 +1,6 @@
 <?php
-class ValidationController
-{
-    public function validateLogin($email, $password)
-    {
+class ValidationController {
+    static public function validateLogin($email, $password) {
         $errors = [];
 
         if (empty($email)) {
@@ -18,8 +16,7 @@ class ValidationController
         return $errors;
     }
 
-    public function validateRegistration($name, $email, $password, $phone, $role)
-    {
+    static  public function validateRegistration($name, $email, $password, $phone, $role) {
         $errors = [];
 
         if (empty($name) || strlen($name) < 3) {
@@ -42,6 +39,30 @@ class ValidationController
         if (empty($role) || !in_array($role, $allowedRoles)) {
             $errors[] = "Invalid user role selection.";
         }
+
+        return $errors;
+    }
+
+    static public function validateRecord($diagnosis, $visitDate) {
+        $errors = [];
+        if (empty($diagnosis))
+            $errors[] = "A valid diagnosis name is required.";
+
+        if (empty($visitDate))
+            $errors[] = "A valid visitDate is required.";
+        return $errors;
+    }
+
+    static public function validatePrescription($medicationName, $dosage, $instructions) {
+        $errors = [];
+        if (empty($medicationName))
+            $errors[] = "A valid medication name is required.";
+
+        if (empty($dosage))
+            $errors[] = "A valid dosage is required.";
+
+        if (empty($instructions))
+            $errors[] = "A valid instructions is required.";
 
         return $errors;
     }
