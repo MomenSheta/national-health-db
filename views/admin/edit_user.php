@@ -10,6 +10,7 @@ include "inc/head.inc.php";
 
 <body>
     <?php include "inc/navbar.inc.php" ?>
+    <?php include 'inc/toaster.inc.php'; ?>
     <main class="px-12 py-8 flex flex-col items-center justify-center">
 
         <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm w-full max-w-lg transition-all">

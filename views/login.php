@@ -4,6 +4,7 @@
 <?php include "inc/head.inc.php" ?>
 
 <body class="bg-slate-100 min-h-screen flex flex-col font-sans">
+    <?php include 'inc/toaster.inc.php'; ?>
 
     <div class="bg-white border-b border-gray-100 px-8 py-4 flex justify-between items-center shadow-sm h-16">
         <div class="flex items-center space-x-2 text-blue-600">

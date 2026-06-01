@@ -9,6 +9,7 @@ require "core/Router.php";
 require "util/Redirect.php";
 require "middlewares/AuthMiddleware.php";
 require "middlewares/RoleMiddleware.php";
+require "middlewares/PrestageMiddleware.php";
 
 require "models/MedicalRecord.model.php";
 require "models/Prescription.model.php";
@@ -42,10 +43,10 @@ $router = new Router();
 $router->get('/', [UserController::class, 'home'], ["authMiddleware"]); // check auth
 $router->get('/profile', [UserController::class, 'profile'], ["authMiddleware"]); // check auth
 
-$router->get('/register', [AuthenticationController::class, 'registerForm'], []); // should be not auth
-$router->post('/register', [AuthenticationController::class, 'register'], []); // should be not auth
-$router->get('/login', [AuthenticationController::class, 'loginForm'], []); // should be not auth
-$router->post('/login', [AuthenticationController::class, 'login'], []); // should be not auth
+$router->get('/register', [AuthenticationController::class, 'registerForm'], ["PrestageMiddleware"]); // not auth
+$router->post('/register', [AuthenticationController::class, 'register'], ["PrestageMiddleware"]); // not auth
+$router->get('/login', [AuthenticationController::class, 'loginForm'], ["PrestageMiddleware"]); // not auth
+$router->post('/login', [AuthenticationController::class, 'login'], ["PrestageMiddleware"]); // not auth
 $router->post('/logout', [AuthenticationController::class, 'logout'], ["authMiddleware"]);  // check auth
 
 $router->get('/my-records', [PatientController::class, 'getMyRecords'], ["authMiddleware", $patientMW]); // [patient]
@@ -76,11 +77,3 @@ $router->post('/admin/users/{id}/edit', [AdminController::class, 'updateUser'], 
 $router->post('/admin/users/{id}/delete', [AdminController::class, 'deleteUser'], ["authMiddleware", $adminMW]); // [admin]
 
 $router->dispatch();
-
-if (isset($_SESSION['error']) && $_SESSION['error'] != "") {
-    echo 'error: ' . $_SESSION['error'];
-}
-
-if (isset($_SESSION['success']) && $_SESSION['error'] != "") {
-    echo 'success: ' . $_SESSION['error'];
-}

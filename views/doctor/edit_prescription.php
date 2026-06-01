@@ -8,6 +8,7 @@ include "inc/head.inc.php";
 
 <body class=" flex flex-col font-sans">
     <?php include "inc/navbar.inc.php" ?>
+    <?php include 'inc/toaster.inc.php'; ?>
 
 
     <main class="flex-1 max-w-3xl w-full mx-auto p-8">

@@ -44,7 +44,6 @@ class RecordController
             return;
         }
         // todo: add validation
-        // todo: check if $patientId is back to a patient
 
         $model = new MedicalRecord(
             patientId: $patientId,

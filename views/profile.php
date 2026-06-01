@@ -6,6 +6,8 @@
 
 <body>
     <?php include 'inc/navbar.inc.php'; ?>
+        <?php include 'inc/toaster.inc.php'; ?>
+
     <main>
         <div class="flex justify-between items-center mb-6">
             <div>

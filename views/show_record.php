@@ -8,6 +8,8 @@ $title = "View Record";
 include "inc/head.inc.php"
 ?>
 <body>
+        <?php include 'inc/toaster.inc.php'; ?>
+
     <main >
         <div class="flex flex-row justify-between w-full">
             <h1 class="text-2xl text-(--color-gray-dark) font-bold capitalize">record details</h1>

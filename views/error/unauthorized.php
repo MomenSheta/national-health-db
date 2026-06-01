@@ -20,6 +20,7 @@ if ($user_role === 'admin') {
 ?>
 
 <body>
+    <?php include 'inc/toaster.inc.php'; ?>
 
     <main class="flex h-screen bg-slate-50">
         <div class="flex flex-col items-center justify-center gap-6 m-auto w-full max-w-md h-full text-center p-6">

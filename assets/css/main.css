@@ -53,7 +53,9 @@ body {
         margin: auto;
         max-width: 80rem;
     }
-    header, nav {
+
+    header,
+    nav {
         margin: auto;
         max-width: 80rem;
         border: none;
@@ -130,6 +132,35 @@ hr {
     }
 
 }
+
+.toast {
+    user-select: none;
+    color: var(--color-white);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.25);
+    animation: inTransation 0.4s ease-in-out 0s;
+    max-width: 25rem;
+
+    &.error {
+        background: var(--color-danger);
+    }
+
+    &.success {
+        background: var(--color-success);
+    }
+}
+
+@keyframes inTransation {
+    0% {
+        transform: translateX(25rem);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
 
 @media (min-width: 640px) {
     main {

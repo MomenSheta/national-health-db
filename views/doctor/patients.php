@@ -10,12 +10,13 @@ include "inc/head.inc.php"
 
 <body>
     <?php include 'inc/navbar.inc.php'; ?>
+    <?php include 'inc/toaster.inc.php'; ?>
     <main>
         <h2 class="text-2xl text-(--color-gray-dark)">My Patients</h2>
         <p class="text-sm text-(--color-gray-dark) opacity-70">View your Patients</p>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-            
+
             <!-- todo: add better UI for no data yet -->
             <?= empty($patients) ? "there is no patients yet" : "" ?>
 

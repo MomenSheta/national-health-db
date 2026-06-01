@@ -7,6 +7,7 @@ include "inc/head.inc.php"
 ?>
 
 <body>
+    <?php include 'inc/toaster.inc.php'; ?>
 
     <main class="flex h-screen">
         <div class="flex flex-col items-center justify-center gap-2 m-auto w-1/4 h-full">

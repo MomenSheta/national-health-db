@@ -7,6 +7,7 @@ include "inc/head.inc.php"
 
 <body>
     <?php include 'inc/navbar.inc.php'; ?>
+    <?php include 'inc/toaster.inc.php'; ?>
     <main class=" px-12 py-8 flex flex-col items-center justify-center">
 
         <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm w-full max-w-lg transition-all">
@@ -63,9 +64,9 @@ include "inc/head.inc.php"
                         <i class="fa-solid fa-id-card text-gray-400 absolute left-4 text-sm"></i>
                         <select name="role" required
                             class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 appearance-none focus:outline-none focus:border-blue-400 focus:bg-white transition cursor-pointer">
-                            <option value="Patient">Patient</option>
-                            <option value="Doctor">Doctor</option>
-                            <option value="Admin">Admin</option>
+                            <option value="patient">Patient</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="admin">Admin</option>
                         </select>
                         <i class="fa-solid fa-chevron-down text-gray-400 absolute right-4 text-xs pointer-events-none"></i>
                     </div>

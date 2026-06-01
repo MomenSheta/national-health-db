@@ -6,6 +6,7 @@
 
 <body>
     <?php include 'inc/navbar.inc.php'; ?>
+    <?php include 'inc/toaster.inc.php'; ?>
 
     <main>
 

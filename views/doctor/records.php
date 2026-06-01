@@ -10,6 +10,7 @@ include "inc/head.inc.php"
 
 <body>
     <?php include 'inc/navbar.inc.php';?>
+    <?php include 'inc/toaster.inc.php'; ?>
     <main>
         <div class="flex flex-row w-full justify-between items-end">
             <div>
